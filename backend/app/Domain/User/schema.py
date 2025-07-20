@@ -11,3 +11,7 @@ class UserDTO(BaseModel):
 class LoginDTO(BaseModel):
     email:str
     password:str
+
+class LoginResponse(BaseModel):
+    token: str
+    is_admin: bool

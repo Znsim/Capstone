@@ -9,7 +9,8 @@ class UserModel(Base):
     username = Column(String(30), unique=True, nullable=False)  
     password = Column(String(255), nullable=False)              
     email = Column(String(100), unique=True, nullable=False)            
-    authenticator = Column(Boolean, default=False)  # 이메일 인증 여부           
+    authenticator = Column(Boolean, default=False)  # 이메일 인증 여부         
+    is_admin = Column(Boolean, default=False)  # 관리자 여부 필드  
 
 class ChatModel(Base):
     __tablename__ = 'chats'
