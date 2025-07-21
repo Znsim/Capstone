@@ -22,14 +22,14 @@ class ChatResponseDTO(BaseModel):
         orm_mode = True
 
 
-# ✅ 유저 정보 응답용 (대화 전체 조회에 포함)
+# ✅ 유저 정보 응답용 (대화 전체 조회에 포함)<- user_pk만 가져오면 다 가능해서 필요 없음
 class UserInfoDTO(BaseModel):
     user_id: int
     username: str
     email: str
 
 
-# ✅ 관리자용 전체 대화 응답용
+# ✅ 관리자용 전체 대화 응답용 <- userdto를 가져올 필요가 없음
 class ConversationDTO(BaseModel):
     user_info: UserInfoDTO
     messages: list[ChatResponseDTO]
