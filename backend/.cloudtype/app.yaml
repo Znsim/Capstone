@@ -1,0 +1,12 @@
+name: fastapi-app
+app: python
+port: 8000
+
+build:
+  env:
+    - name: PYTHON_VERSION
+      value: "3.11"
+  requirementsPath: app/requirements.txt
+
+run:
+  command: uvicorn app.main:app --host 0.0.0.0 --port 8000
