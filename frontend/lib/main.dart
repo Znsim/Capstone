@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'app/router.dart'; // 🔹 라우터 import
 import 'pages/signin_mobile.dart';
 import 'pages/signin_web.dart';
-import "./pages/header.dart";
+import "./pages/header_mobile.dart";
+import "./pages/header_web.dart";
+import './pages/main_mobile.dart';
+import "./pages/main_web.dart";
 
 void main() {
   runApp(const MyApp());
@@ -42,6 +45,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: const HeaderNavigationBar(), drawer: AppDrawer());
+    return kIsWeb
+        ? const MainPageWeb()
+        : const MainPageMobile(); // ← 모바일이면 바로 모바일 메인 페이지 보여줌
   }
 }
