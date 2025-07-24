@@ -21,16 +21,16 @@ async def Join(payload:UserDTO,db=Depends(provide_session)):
     send_verification_email(payload.email)
     return user_data
 
-@router.get("/login")
-async def Login(email:str,password:str,db=Depends(provide_session)):
+@router.post("/login")
+async def Login(payload: LoginDTO, db=Depends(provide_session)):
     crud = UserCRUD(session=db)
-    print(email)
-    print(password)
-    token = await crud.login(email=email, password=password) 
+    print(payload.email)
+    print(payload.password)
+    token = await crud.login(email=payload.email, password=payload.password) 
     print(token)
     if token:
         # 사용자 정보 별도 조회
-        user_info = await crud.get_user_by_email(email=email)
+        user_info = await crud.get_user_by_email(email=payload.email)
         # 사용자 정보
         return {TOKEN_TYPE + " " + token: user_info}
 
@@ -79,9 +79,9 @@ async def AuthCheck(token: str, db=Depends(provide_session)):
         """
 
 @router.get("/nameCheck")
-async def NameCheck(username:str,db=Depends(provide_session)):
+async def NameCheck(name:str,db=Depends(provide_session)):
     crud = UserCRUD(session=db)
-    if await crud.get_user_by_username(username=username):  
+    if await crud.get_user_by_username(username=name):  
         return True
     else:
         return False
