@@ -335,8 +335,16 @@
             try {
                 loginStatus.textContent = '로그인 중...';
                 
-                const response = await fetch(`/users/login?email=${userId}&password=${userPw}`, {
-                    method: 'GET'
+                // GET에서 POST로 변경하고 JSON 형태로 전송
+                const response = await fetch('/users/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: userId,
+                        password: userPw
+                    })
                 });
                 
                 if (!response.ok) {
