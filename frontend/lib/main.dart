@@ -1,15 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'app/router.dart'; // 🔹 라우터 import
 import 'pages/signin_mobile.dart';
 import 'pages/signin_web.dart';
-import "./pages/header_mobile.dart";
-import "./pages/header_web.dart";
+// import "./pages/header_mobile.dart";
+// import "./pages/header_web.dart";
 import './pages/main_mobile.dart';
 import "./pages/main_web.dart";
+import "../data/user_provider.dart";
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
