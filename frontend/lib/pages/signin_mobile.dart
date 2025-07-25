@@ -1,7 +1,7 @@
 //모바일 전용 로그인 화면
 import "package:flutter/material.dart";
-import "../data/dummy_user.dart";
 import "./signLogic.dart";
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInMobile extends StatefulWidget {
   final bool isLoginMode;
@@ -32,6 +32,18 @@ class _SignInMobileState extends State<SignInMobile> {
   void initState() {
     super.initState();
     isLoginMode = widget.isLoginMode;
+    _checkAlreadyLoggedIn();
+  }
+
+  void _checkAlreadyLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    if (isLoggedIn) {
+      // 이미 로그인된 상태면 메인으로 강제 이동 (웹/모바일 상관없이 작동)
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, '/main');
+      });
+    }
   }
 
   @override
@@ -230,10 +242,10 @@ class _SignInMobileState extends State<SignInMobile> {
             onPressed: () {
               signInLogic.performLogin(
                 context: context,
-                dummyUser: dummyUser,
                 onSuccess: () {
                   Navigator.pushNamed(context, '/main');
                 },
+                isAutoLogin: isAutoLogin,
               );
             },
             style: ElevatedButton.styleFrom(
