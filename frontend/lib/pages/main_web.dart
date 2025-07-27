@@ -52,12 +52,12 @@ class _MainPageWebState extends State<MainPageWeb> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
-            DottedBorder( // 오류
-              // color: const Color(0xFF4A46C3),
-              // strokeWidth: 2,
-              // dashPattern: const [8, 4],
-              // borderType: BorderType.RRect,
-              // radius: const Radius.circular(12),
+            DottedBorder(
+              color: const Color(0xFF4A46C3),
+              strokeWidth: 2,
+              dashPattern: const [8, 4],
+              borderType: BorderType.RRect,
+              radius: const Radius.circular(12),
               child: InkWell(
                 onTap: _pickImage,
                 child: Container(

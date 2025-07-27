@@ -8,8 +8,6 @@ import './pages/main_mobile.dart';
 import "./pages/main_web.dart";
 import "../data/user_provider.dart";
 import 'package:provider/provider.dart';
-import '../pages/chatInquiry_web.dart';
-import '../pages/chatInquiry_mobile.dart';
 
 void main() {
   runApp(
@@ -31,16 +29,6 @@ class MyApp extends StatelessWidget {
         if (settings.name == '/') {
           return MaterialPageRoute(builder: (_) => const HomeScreen());
         }
-        // 채팅문의
-        if (settings.name == '/chatInquiry') {
-          return PageRouteBuilder(
-            pageBuilder: (_, __, ___) =>
-                kIsWeb ? ChatInquiryWeb() : ChatInquiryMobile(),
-            transitionDuration: Duration.zero, // 전환 애니메이션 제거
-            reverseTransitionDuration: Duration.zero, // 뒤로가기 애니메이션 제거
-          );
-        }
-        // 로그인/회원가입
         if (settings.name == '/signin') {
           final isLogin = settings.arguments as bool? ?? true;
           return MaterialPageRoute(
@@ -49,7 +37,6 @@ class MyApp extends StatelessWidget {
                 : SignInMobile(isLoginMode: isLogin),
           );
         }
-        // 메인페이지
         if (settings.name == '/main') {
           return MaterialPageRoute(builder: (_) => const HomeScreen());
         }

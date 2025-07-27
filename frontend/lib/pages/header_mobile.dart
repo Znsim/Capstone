@@ -61,20 +61,15 @@ class AppDrawer extends StatelessWidget {
                 onTap: () => Navigator.pop(context),
               ),
               _DrawerNavItem(text: '안내사항', onTap: () => Navigator.pop(context)),
+              _DrawerNavItem(text: '고객센터', onTap: () => Navigator.pop(context)),
+              const Divider(),
+              _DrawerNavItem(
+                text: '마이페이지',
+                onTap: () => Navigator.pop(context),
+              ),
+
               // 👇 로그인 상태에 따라 다른 버튼 보여주기
-              if (isLoggedIn) ...[
-                _DrawerNavItem(
-                  text: '고객센터',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/chatInquiry');
-                  },
-                ),
-                const Divider(),
-                _DrawerNavItem(
-                  text: '마이페이지',
-                  onTap: () => Navigator.pop(context),
-                ),
+              if (isLoggedIn)
                 _DrawerNavItem(
                   text: '로그아웃',
                   onTap: () async {
@@ -87,8 +82,8 @@ class AppDrawer extends StatelessWidget {
                       (route) => false,
                     );
                   },
-                ),
-              ] else ...[
+                )
+              else ...[
                 _DrawerNavItem(
                   text: '로그인',
                   onTap: () {
