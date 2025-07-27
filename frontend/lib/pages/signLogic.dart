@@ -82,11 +82,13 @@ class SignInLogic extends AuthLogicBase {
       final userMap = result!.values.first;
       final userPk = userMap['id'];
       final username = userMap['username'];
+      final isAdmin = userMap['is_admin'] ?? false;
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('userPk', userPk);
       await prefs.setString('username', username);
       await prefs.setBool('isLoggedIn', true);
+      await prefs.setBool('isAdmin', isAdmin);
 
       // Provider에 저장
       context.read<UserProvider>().setUser(userPk, username);
@@ -109,6 +111,7 @@ class SignInLogic extends AuthLogicBase {
   bool get isAllValid => isEmailAndPwValid;
 }
 
+// 회원가입 로직
 class SignUpLogic extends AuthLogicBase {
   final nameController = TextEditingController();
   final pwConfirmController = TextEditingController();
@@ -152,4 +155,41 @@ class SignUpLogic extends AuthLogicBase {
   }
 
   bool get isAllValid => isNameValid && isEmailAndPwValid && isPwConfirmValid;
+
+  // 회원가입 API 호출 함수
+  Future<bool> performjoin({required BuildContext context}) async {
+    final email = emailController.text.trim();
+    final pw = passwordController.text.trim();
+    final name = nameController.text.trim();
+
+    if (!isAllValid) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('입력값을 다시 확인해 주세요.')));
+      return false;
+    }
+
+    try {
+      await ApiService.join(username: name, email: email, password: pw);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('인증 메일이 전송되었습니다. 메일함을 확인하세요.')),
+      );
+
+      return true;
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('회원가입 실패'),
+          content: Text(
+            e is Exception
+                ? e.toString().replaceAll('Exception: ', '')
+                : e.toString(),
+          ),
+        ),
+      );
+      return false;
+    }
+  }
 }
