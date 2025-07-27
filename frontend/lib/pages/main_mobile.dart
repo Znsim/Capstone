@@ -122,12 +122,12 @@ class _MainPageMobileState extends State<MainPageMobile> {
   }
 
   Widget _buildImageUploader() {
-    return DottedBorder(
-      color: const Color(0xFF4A46C3),
-      strokeWidth: 2,
-      dashPattern: const [8, 4],
-      borderType: BorderType.RRect,
-      radius: const Radius.circular(12),
+    return DottedBorder( // 오류
+      // color: const Color(0xFF4A46C3),
+      // strokeWidth: 2,
+      // dashPattern: const [8, 4],
+      // borderType: BorderType.RRect,
+      // radius: const Radius.circular(12),
       child: InkWell(
         onTap: _pickImage,
         child: Container(
