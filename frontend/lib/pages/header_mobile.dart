@@ -39,6 +39,13 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
               _DrawerNavItem(
+                text: '홈',
+                onTap: () {
+                  Navigator.pop(context); // 드로어 닫기
+                  Navigator.pushNamed(context, '/main'); // 메인 페이지로 이동
+                },
+              ),
+              _DrawerNavItem(
                 text: '서비스 소개',
                 onTap: () => Navigator.pop(context),
               ),
@@ -56,11 +63,6 @@ class AppDrawer extends StatelessWidget {
                   onMenuTap?.call('이미지 분석');
                 },
               ),
-              _DrawerNavItem(
-                text: '판례 검색',
-                onTap: () => Navigator.pop(context),
-              ),
-              _DrawerNavItem(text: '안내사항', onTap: () => Navigator.pop(context)),
               // 👇 로그인 상태에 따라 다른 버튼 보여주기
               if (isLoggedIn) ...[
                 _DrawerNavItem(

@@ -1,9 +1,15 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter/foundation.dart'; // kIsWeb 사용을 위해 추가
 
 class ApiService {
-  static const String baseUrl = "http://localhost:8000"; // 실제 서버 주소로 교체
-  //static const String baseUrl = 'http://10.0.2.2:8000'; // 애뮬
+  static String get baseUrl {
+    if (kIsWeb) {
+      return "http://localhost:8000"; // 웹
+    } else {
+      return "http://10.0.2.2:8000"; // 모바일 (Android 에뮬레이터)
+    }
+  }
 
   // 로그인
   static Future<Map<String, dynamic>?> login(
@@ -11,7 +17,7 @@ class ApiService {
     String password,
   ) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/users/login'),
+      Uri.parse('${baseUrl}/users/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'email': email, 'password': password}),
     );
@@ -30,7 +36,7 @@ class ApiService {
     required String password,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/users/join'),
+      Uri.parse('${baseUrl}/users/join'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'username': username,
@@ -52,7 +58,7 @@ class ApiService {
     required String message,
     bool isFromAdmin = false,
   }) async {
-    final url = Uri.parse('$baseUrl/chat/send');
+    final url = Uri.parse('${baseUrl}/chat/send');
 
     final body = jsonEncode({
       "user_pk": userPk,
@@ -73,7 +79,7 @@ class ApiService {
   static Future<List<Map<String, dynamic>>> fetchUserMessages(
     int userPk,
   ) async {
-    final url = Uri.parse('$baseUrl/chat/get_messages');
+    final url = Uri.parse('${baseUrl}/chat/get_messages');
 
     final body = jsonEncode({
       "user_pk": userPk,
@@ -97,7 +103,7 @@ class ApiService {
 
   // 전체 사용자 대화 목록 조회 (관리자용)
   static Future<Map<String, dynamic>> fetchAllConversations() async {
-    final url = Uri.parse('$baseUrl/chat/all');
+    final url = Uri.parse('${baseUrl}/chat/all');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
