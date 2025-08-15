@@ -14,6 +14,7 @@ class ChatInquiryWeb extends StatefulWidget {
 
 class _ChatInquiryWebState extends State<ChatInquiryWeb> {
   final ChatInquiryLogic logic = ChatInquiryLogic();
+  bool _isInitialized = false;
 
   @override
   void initState() {
@@ -30,6 +31,7 @@ class _ChatInquiryWebState extends State<ChatInquiryWeb> {
     await logic.initialize(isAdmin: isAdminFlag, userPk: userPk);
 
     setState(() {
+      _isInitialized = true;
     });
   }
 
@@ -45,6 +47,16 @@ class _ChatInquiryWebState extends State<ChatInquiryWeb> {
     const bgColor = Color(0xFF8463F6);
     const maxWidth = 800.0;
 
+    // 로딩화면
+    if (!_isInitialized) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: buildWebHeaderBar(context),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    // 로딩 후 ui
     return Scaffold(
       backgroundColor: bgColor,
       appBar: buildWebHeaderBar(context),
@@ -59,7 +71,7 @@ class _ChatInquiryWebState extends State<ChatInquiryWeb> {
                   child: Container(
                     constraints: BoxConstraints(maxWidth: 300),
                     height: MediaQuery.of(context).size.height,
-                    color: const Color(0xFFF4F4F4),
+                    color: Colors.white,
                     child: buildUserList(), // 유저 목록
                   ),
                 ),
@@ -100,76 +112,81 @@ class _ChatInquiryWebState extends State<ChatInquiryWeb> {
   // 관리자: 유저 목록
   Widget buildUserList() {
     return ValueListenableBuilder<Map<int, dynamic>>(
-    valueListenable: logic.allConversations, // 전체 대화 상태
-    builder: (context, conversations, _) {
-      final entries = conversations.entries.toList(); // List로 변환해서 index 접근 개선
+      valueListenable: logic.allConversations, // 전체 대화 상태
+      builder: (context, conversations, _) {
+        final entries = conversations.entries
+            .toList(); // List로 변환해서 index 접근 개선
 
-      return ValueListenableBuilder<int?>(
-        valueListenable: logic.selectedUserPk, // 선택된 유저 상태
-        builder: (context, selectedUserPk, __) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 제목+대화방 수
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  "사용자 목록 (${entries.length})",
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        return ValueListenableBuilder<int?>(
+          valueListenable: logic.selectedUserPk, // 선택된 유저 상태
+          builder: (context, selectedUserPk, __) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // 제목+대화방 수
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    "사용자 목록 (${entries.length})",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-              const Divider(height: 1),
-              // 사용자 목록 리스트뷰
-              Expanded(
-                child: ListView.builder(
-                  itemCount: entries.length,
-                  itemBuilder: (context, index) {
-                    final entry = entries[index];
-                    final userInfo = entry.value["user_info"] ?? {};
-                    final isSelected = selectedUserPk == entry.key;
+                const Divider(height: 1),
+                // 사용자 목록 리스트뷰
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: entries.length,
+                    itemBuilder: (context, index) {
+                      final entry = entries[index];
+                      final isSelected = selectedUserPk == entry.key;
 
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        // 선택된 유저 색상
-                        color: isSelected
-                            ? Colors.deepPurple.shade50
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: ListTile(
-                        // 유저 이름+이메일
-                        title: Text(
-                          '${userInfo["username"] ?? "알 수 없음"} (${userInfo["email"] ?? ""})',
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
                         ),
-                        // 미리보기 대화
-                        subtitle: Text(
-                          logic.getLastMessagePreview(entry.key),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        shape: RoundedRectangleBorder(
+                        decoration: BoxDecoration(
+                          // 선택된 유저 색상
+                          color: isSelected
+                              ? Colors.deepPurple.shade50
+                              : Colors.transparent,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        // 유저 선택: 대화 조회
-                        onTap: () =>
-                            logic.selectUser(entry.key, isAdmin: true),
-                      ),
-                    );
-                  },
+                        child: ListTile(
+                          // 유저 이름+이메일
+                          title: Text(
+                            '${logic.userInfoMap.value[entry.key]?["username"] ?? "알 수 없음"} '
+                            '(${logic.userInfoMap.value[entry.key]?["email"] ?? ""})',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          // 미리보기 대화
+                          subtitle: Text(
+                            logic.getLastMessagePreview(entry.key),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          // 유저 선택: 대화 조회
+                          onTap: () =>
+                              logic.selectUser(entry.key, isAdmin: true),
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
-      );
-    },
-  );
-}
-
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
 
   // 공통: 채팅창
   Widget buildChatArea() {
@@ -249,7 +266,7 @@ class InputArea extends StatefulWidget {
 
 class _InputAreaState extends State<InputArea> {
   late final FocusNode _focusNode;
-late final bool isAdmin;
+  late final bool isAdmin;
 
   @override
   void initState() {
@@ -257,7 +274,9 @@ late final bool isAdmin;
     _focusNode = widget.focusNode;
 
     // 전역 logic 객체에서 관리자 여부 불러오기
-    final logic = context.findAncestorStateOfType<_ChatInquiryWebState>()?.logic;
+    final logic = context
+        .findAncestorStateOfType<_ChatInquiryWebState>()
+        ?.logic;
     isAdmin = logic?.isAdmin ?? false;
   }
 
@@ -288,7 +307,7 @@ late final bool isAdmin;
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
                 decoration: InputDecoration(
-                  hintText: isAdmin? '사용자에게 답변하세요' : '관리자에게 문의하세요',
+                  hintText: isAdmin ? '사용자에게 답변하세요' : '관리자에게 문의하세요',
                   hintStyle: TextStyle(color: Colors.grey),
                   filled: true,
                   fillColor: Colors.white,

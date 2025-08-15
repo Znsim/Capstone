@@ -122,4 +122,13 @@ class ApiService {
       throw Exception('전체 대화 조회 실패');
     }
   }
+
+  // 웹소켓uri
+  static Uri get webSocketUri {
+    if (kIsWeb) {
+      return Uri.parse('ws://localhost:8000/websocket/ws/chats');
+    } else {
+      return Uri.parse('ws://10.0.2.2:8000/websocket/ws/chats');
+    }
+  }
 }

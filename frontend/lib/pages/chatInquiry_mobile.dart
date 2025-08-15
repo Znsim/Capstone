@@ -14,6 +14,7 @@ class ChatInquiryMobile extends StatefulWidget {
 
 class _ChatInquiryMobileState extends State<ChatInquiryMobile> {
   final ChatInquiryLogic logic = ChatInquiryLogic();
+  bool _isInitialized = false;
 
   @override
   void initState() {
@@ -29,7 +30,9 @@ class _ChatInquiryMobileState extends State<ChatInquiryMobile> {
 
     await logic.initialize(isAdmin: isAdminFlag, userPk: userPk);
 
-    setState(() {});
+    setState(() {
+      _isInitialized = true;
+    });
   }
 
   // 리소스 정리
@@ -41,6 +44,16 @@ class _ChatInquiryMobileState extends State<ChatInquiryMobile> {
 
   @override
   Widget build(BuildContext context) {
+    // 로딩 화면
+    if (!_isInitialized) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: buildAppHeaderBar(context),
+        drawer: const AppDrawer(),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
     // 채팅창->목록 뒤로가기
     return WillPopScope(
       onWillPop: () async {
@@ -65,7 +78,7 @@ class _ChatInquiryMobileState extends State<ChatInquiryMobile> {
                   return Container(
                     width: double.infinity,
                     height: double.infinity,
-                    color: const Color(0xFFF4F4F4),
+                    color: Colors.white,
                     child: buildUserList(),
                   );
                 }
@@ -111,7 +124,6 @@ class _ChatInquiryMobileState extends State<ChatInquiryMobile> {
                     itemCount: entries.length,
                     itemBuilder: (context, index) {
                       final entry = entries[index];
-                      final userInfo = entry.value["user_info"] ?? {};
                       final isSelected = selectedUserPk == entry.key;
 
                       return Container(
@@ -129,7 +141,10 @@ class _ChatInquiryMobileState extends State<ChatInquiryMobile> {
                         child: ListTile(
                           // 유저 이름+이메일
                           title: Text(
-                            '${userInfo["username"] ?? "알 수 없음"} (${userInfo["email"] ?? ""})',
+                            '${logic.userInfoMap.value[entry.key]?["username"] ?? "알 수 없음"} '
+                            '(${logic.userInfoMap.value[entry.key]?["email"] ?? ""})',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           // 미리보기 대화
                           subtitle: Text(
