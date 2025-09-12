@@ -5,7 +5,7 @@
 
 인터넷에 게시되는 텍스트가 형사법 위반 소지가 있는지 자동 분석하고 안전한 표현을 제안하는 AI 서비스
 
-[ 배경 및 필요성]
+### 배경 및 필요성
 
 - 온라인에서 법적 문제가 될 수 있는 글(명예훼손, 협박, 모욕 등) 증가
 
@@ -13,7 +13,7 @@
 
 - 본 프로젝트는 형사법 데이터 기반 LLM + RAG 모델로 위험 여부를 탐지
 
-[ 주요 기능 ]
+### 주요 기능 
 
 텍스트 분석: 사용자가 입력한 문장이 형사법 위반 가능성이 있는지 판단
 
@@ -25,7 +25,7 @@
 
 웹/앱 제공: Flutter 기반 프론트엔드, Node.js/Express 백엔드
 
-[ 사용 예시 (Example) ]
+### 사용 예시 (Example) 
 
 입력: "너 죽여버린다"
 
@@ -35,4 +35,7 @@
 
 대체 표현: "너무 화가 나"
 
+## 📊 GitHub Stats
+
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_USERNAME&layout=compact&theme=radical)
 
