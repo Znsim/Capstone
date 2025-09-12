@@ -35,18 +35,4 @@
 
 대체 표현: "너무 화가 나"
 
-## 3. 시스템 아키텍처 (System Architecture)
 
-시스템은 **프론트엔드(Flutter)**, **백엔드(Node.js/Express)**, **데이터베이스(PostgreSQL)**,  
-그리고 **AI 모델(OpenAI GPT API + RAG 구조)** 로 구성되어 있습니다.  
-
-```mermaid
-flowchart TD
-    User([사용자]) -->|텍스트 입력| Frontend[Frontend<br/>Flutter (Web/Mobile)]
-    Frontend -->|요청 전송| Backend[Backend<br/>Node.js + Express]
-    Backend -->|쿼리 및 이력 저장| DB[(PostgreSQL<br/>Neon Cloud)]
-    Backend -->|LLM 요청| AI[AI 모델<br/>OpenAI GPT API<br/>+ RAG 구조]
-    AI -->|관련 법령/판례 검색| Dataset[(형사법 데이터셋<br/>AI Hub 활용)]
-    AI -->|분석 결과 반환| Backend
-    Backend -->|결과 전달| Frontend
-    Frontend -->|법적 위험도/대체 표현 제공| User
