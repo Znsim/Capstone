@@ -34,7 +34,4 @@
 
 대체 표현: "너무 화가 나"
 
-## 📊 GitHub Stats
-
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Znsim&layout=compact&theme=radical)
 
