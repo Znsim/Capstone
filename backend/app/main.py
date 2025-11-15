@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from Domain import routers
 from core.database import init_db
 from core.config import get_config
-from Domain import routers
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse  
 from pathlib import Path

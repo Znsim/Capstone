@@ -1,0 +1,367 @@
+{"id": "pat-0001", "type": "pattern", "category": "profanity", "pattern": "(?:씨+)\\s*발", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0002", "type": "pattern", "category": "profanity", "pattern": "(?:씨+)\\s*밸", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0003", "type": "pattern", "category": "profanity", "pattern": "(?:씨+)\\s*빨", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0004", "type": "pattern", "category": "profanity", "pattern": "(?:씨+)\\s*벌", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0005", "type": "pattern", "category": "profanity", "pattern": "(?:씨+)\\s*팔", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0006", "type": "pattern", "category": "profanity", "pattern": "(?:씨+)\\s*펄", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0007", "type": "pattern", "category": "profanity", "pattern": "(?:시+)\\s*발", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0008", "type": "pattern", "category": "profanity", "pattern": "(?:시+)\\s*밸", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0009", "type": "pattern", "category": "profanity", "pattern": "(?:시+)\\s*빨", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0010", "type": "pattern", "category": "profanity", "pattern": "(?:시+)\\s*벌", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0011", "type": "pattern", "category": "profanity", "pattern": "(?:시+)\\s*팔", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0012", "type": "pattern", "category": "profanity", "pattern": "(?:시+)\\s*펄", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0013", "type": "pattern", "category": "profanity", "pattern": "(?:쉬+)\\s*발", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0014", "type": "pattern", "category": "profanity", "pattern": "(?:쉬+)\\s*밸", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0015", "type": "pattern", "category": "profanity", "pattern": "(?:쉬+)\\s*빨", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0016", "type": "pattern", "category": "profanity", "pattern": "(?:쉬+)\\s*벌", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0017", "type": "pattern", "category": "profanity", "pattern": "(?:쉬+)\\s*팔", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0018", "type": "pattern", "category": "profanity", "pattern": "(?:쉬+)\\s*펄", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0019", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ\\s*[1ilI!]?)\\s*발", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0020", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ\\s*[1ilI!]?)\\s*밸", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0021", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ\\s*[1ilI!]?)\\s*빨", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0022", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ\\s*[1ilI!]?)\\s*벌", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0023", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ\\s*[1ilI!]?)\\s*팔", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0024", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ\\s*[1ilI!]?)\\s*펄", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0025", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ+)\\s*발", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0026", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ+)\\s*밸", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0027", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ+)\\s*빨", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0028", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ+)\\s*벌", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0029", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ+)\\s*팔", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0030", "type": "pattern", "category": "profanity", "pattern": "(?:ㅆ+)\\s*펄", "weight": 40, "tags": ["욕설", "교란"]}
+{"id": "pat-0031", "type": "pattern", "category": "profanity", "pattern": "(?:ㅅ|ㅆ)\\s*[i1lㅣ]\\s*[ㅂb]\\s*[ㅏa@]\\s*[ㄹrl1]", "weight": 45, "tags": ["욕설", "자모분해"]}
+{"id": "pat-0032", "type": "pattern", "category": "profanity", "pattern": "개\\s*새\\s*끼", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0033", "type": "pattern", "category": "profanity", "pattern": "개\\s*새\\s*키", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0034", "type": "pattern", "category": "profanity", "pattern": "개\\s*새\\s*기", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0035", "type": "pattern", "category": "profanity", "pattern": "개\\s*쌔\\s*끼", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0036", "type": "pattern", "category": "profanity", "pattern": "개\\s*쌔\\s*키", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0037", "type": "pattern", "category": "profanity", "pattern": "개\\s*쌔\\s*기", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0038", "type": "pattern", "category": "profanity", "pattern": "개\\s*색\\s*끼", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0039", "type": "pattern", "category": "profanity", "pattern": "개\\s*색\\s*키", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0040", "type": "pattern", "category": "profanity", "pattern": "개\\s*색\\s*기", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0041", "type": "pattern", "category": "profanity", "pattern": "개\\s*샊\\s*끼", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0042", "type": "pattern", "category": "profanity", "pattern": "개\\s*샊\\s*키", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0043", "type": "pattern", "category": "profanity", "pattern": "개\\s*샊\\s*기", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0044", "type": "pattern", "category": "profanity", "pattern": "개\\s*쇅\\s*끼", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0045", "type": "pattern", "category": "profanity", "pattern": "개\\s*쇅\\s*키", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0046", "type": "pattern", "category": "profanity", "pattern": "개\\s*쇅\\s*기", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0047", "type": "pattern", "category": "profanity", "pattern": "개\\s*쉑\\s*끼", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0048", "type": "pattern", "category": "profanity", "pattern": "개\\s*쉑\\s*키", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0049", "type": "pattern", "category": "profanity", "pattern": "개\\s*쉑\\s*기", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0050", "type": "pattern", "category": "profanity", "pattern": "개\\s*쉐\\s*끼", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0051", "type": "pattern", "category": "profanity", "pattern": "개\\s*쉐\\s*키", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0052", "type": "pattern", "category": "profanity", "pattern": "개\\s*쉐\\s*기", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0053", "type": "pattern", "category": "profanity", "pattern": "씹\\s*새\\s*끼", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0054", "type": "pattern", "category": "profanity", "pattern": "씹\\s*새\\s*키", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0055", "type": "pattern", "category": "profanity", "pattern": "씹\\s*새\\s*기", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0056", "type": "pattern", "category": "profanity", "pattern": "씹\\s*쌔\\s*끼", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0057", "type": "pattern", "category": "profanity", "pattern": "씹\\s*쌔\\s*키", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0058", "type": "pattern", "category": "profanity", "pattern": "씹\\s*쌔\\s*기", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0059", "type": "pattern", "category": "profanity", "pattern": "씹\\s*쎄\\s*끼", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0060", "type": "pattern", "category": "profanity", "pattern": "씹\\s*쎄\\s*키", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0061", "type": "pattern", "category": "profanity", "pattern": "씹\\s*쎄\\s*기", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0062", "type": "pattern", "category": "profanity", "pattern": "십\\s*새\\s*끼", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0063", "type": "pattern", "category": "profanity", "pattern": "십\\s*새\\s*키", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0064", "type": "pattern", "category": "profanity", "pattern": "십\\s*새\\s*기", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0065", "type": "pattern", "category": "profanity", "pattern": "십\\s*쌔\\s*끼", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0066", "type": "pattern", "category": "profanity", "pattern": "십\\s*쌔\\s*키", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0067", "type": "pattern", "category": "profanity", "pattern": "십\\s*쌔\\s*기", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0068", "type": "pattern", "category": "profanity", "pattern": "십\\s*쎄\\s*끼", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0069", "type": "pattern", "category": "profanity", "pattern": "십\\s*쎄\\s*키", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0070", "type": "pattern", "category": "profanity", "pattern": "십\\s*쎄\\s*기", "weight": 50, "tags": ["욕설", "파생"]}
+{"id": "pat-0071", "type": "pattern", "category": "profanity", "pattern": "병\\s*신", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0072", "type": "pattern", "category": "profanity", "pattern": "병\\s*쉰", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0073", "type": "pattern", "category": "profanity", "pattern": "병\\s*쉔", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0074", "type": "pattern", "category": "profanity", "pattern": "병\\s*씬", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0075", "type": "pattern", "category": "profanity", "pattern": "병\\s*싄", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0076", "type": "pattern", "category": "profanity", "pattern": "빙\\s*신", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0077", "type": "pattern", "category": "profanity", "pattern": "빙\\s*쉰", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0078", "type": "pattern", "category": "profanity", "pattern": "빙\\s*쉔", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0079", "type": "pattern", "category": "profanity", "pattern": "빙\\s*씬", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0080", "type": "pattern", "category": "profanity", "pattern": "빙\\s*싄", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0081", "type": "pattern", "category": "profanity", "pattern": "븅\\s*신", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0082", "type": "pattern", "category": "profanity", "pattern": "븅\\s*쉰", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0083", "type": "pattern", "category": "profanity", "pattern": "븅\\s*쉔", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0084", "type": "pattern", "category": "profanity", "pattern": "븅\\s*씬", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0085", "type": "pattern", "category": "profanity", "pattern": "븅\\s*싄", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0086", "type": "pattern", "category": "profanity", "pattern": "븽\\s*신", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0087", "type": "pattern", "category": "profanity", "pattern": "븽\\s*쉰", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0088", "type": "pattern", "category": "profanity", "pattern": "븽\\s*쉔", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0089", "type": "pattern", "category": "profanity", "pattern": "븽\\s*씬", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0090", "type": "pattern", "category": "profanity", "pattern": "븽\\s*싄", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0091", "type": "pattern", "category": "profanity", "pattern": "벙\\s*신", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0092", "type": "pattern", "category": "profanity", "pattern": "벙\\s*쉰", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0093", "type": "pattern", "category": "profanity", "pattern": "벙\\s*쉔", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0094", "type": "pattern", "category": "profanity", "pattern": "벙\\s*씬", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0095", "type": "pattern", "category": "profanity", "pattern": "벙\\s*싄", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0096", "type": "pattern", "category": "profanity", "pattern": "뱅\\s*신", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0097", "type": "pattern", "category": "profanity", "pattern": "뱅\\s*쉰", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0098", "type": "pattern", "category": "profanity", "pattern": "뱅\\s*쉔", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0099", "type": "pattern", "category": "profanity", "pattern": "뱅\\s*씬", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0100", "type": "pattern", "category": "profanity", "pattern": "뱅\\s*싄", "weight": 35, "tags": ["욕설", "음운변형"]}
+{"id": "pat-0101", "type": "pattern", "category": "profanity", "pattern": "좆\\s*같", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0102", "type": "pattern", "category": "profanity", "pattern": "좆\\s*같은", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0103", "type": "pattern", "category": "profanity", "pattern": "좆\\s*같네", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0104", "type": "pattern", "category": "profanity", "pattern": "좆\\s*까", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0105", "type": "pattern", "category": "profanity", "pattern": "좆\\s*먹", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0106", "type": "pattern", "category": "profanity", "pattern": "좆\\s*빨", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0107", "type": "pattern", "category": "profanity", "pattern": "좆\\s*털", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0108", "type": "pattern", "category": "profanity", "pattern": "좆\\s*만", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0109", "type": "pattern", "category": "profanity", "pattern": "좆\\s*나", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0110", "type": "pattern", "category": "profanity", "pattern": "좆\\s*네", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0111", "type": "pattern", "category": "profanity", "pattern": "좆\\s*같냐", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0112", "type": "pattern", "category": "profanity", "pattern": "좇\\s*같", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0113", "type": "pattern", "category": "profanity", "pattern": "좇\\s*같은", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0114", "type": "pattern", "category": "profanity", "pattern": "좇\\s*같네", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0115", "type": "pattern", "category": "profanity", "pattern": "좇\\s*까", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0116", "type": "pattern", "category": "profanity", "pattern": "좇\\s*먹", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0117", "type": "pattern", "category": "profanity", "pattern": "좇\\s*빨", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0118", "type": "pattern", "category": "profanity", "pattern": "좇\\s*털", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0119", "type": "pattern", "category": "profanity", "pattern": "좇\\s*만", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0120", "type": "pattern", "category": "profanity", "pattern": "좇\\s*나", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0121", "type": "pattern", "category": "profanity", "pattern": "좇\\s*네", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0122", "type": "pattern", "category": "profanity", "pattern": "좇\\s*같냐", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0123", "type": "pattern", "category": "profanity", "pattern": "좄\\s*같", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0124", "type": "pattern", "category": "profanity", "pattern": "좄\\s*같은", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0125", "type": "pattern", "category": "profanity", "pattern": "좄\\s*같네", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0126", "type": "pattern", "category": "profanity", "pattern": "좄\\s*까", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0127", "type": "pattern", "category": "profanity", "pattern": "좄\\s*먹", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0128", "type": "pattern", "category": "profanity", "pattern": "좄\\s*빨", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0129", "type": "pattern", "category": "profanity", "pattern": "좄\\s*털", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0130", "type": "pattern", "category": "profanity", "pattern": "좄\\s*만", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0131", "type": "pattern", "category": "profanity", "pattern": "좄\\s*나", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0132", "type": "pattern", "category": "profanity", "pattern": "좄\\s*네", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0133", "type": "pattern", "category": "profanity", "pattern": "좄\\s*같냐", "weight": 45, "tags": ["욕설", "파생"]}
+{"id": "pat-0134", "type": "pattern", "category": "profanity", "pattern": "니\\s*미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0135", "type": "pattern", "category": "profanity", "pattern": "니\\s*믜", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0136", "type": "pattern", "category": "profanity", "pattern": "니\\s*기미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0137", "type": "pattern", "category": "profanity", "pattern": "니\\s*귀미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0138", "type": "pattern", "category": "profanity", "pattern": "니\\s*미럴", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0139", "type": "pattern", "category": "profanity", "pattern": "니\\s*미랄", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0140", "type": "pattern", "category": "profanity", "pattern": "니\\s*미롤", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0141", "type": "pattern", "category": "profanity", "pattern": "늬\\s*미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0142", "type": "pattern", "category": "profanity", "pattern": "늬\\s*믜", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0143", "type": "pattern", "category": "profanity", "pattern": "늬\\s*기미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0144", "type": "pattern", "category": "profanity", "pattern": "늬\\s*귀미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0145", "type": "pattern", "category": "profanity", "pattern": "늬\\s*미럴", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0146", "type": "pattern", "category": "profanity", "pattern": "늬\\s*미랄", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0147", "type": "pattern", "category": "profanity", "pattern": "늬\\s*미롤", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0148", "type": "pattern", "category": "profanity", "pattern": "뉘\\s*미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0149", "type": "pattern", "category": "profanity", "pattern": "뉘\\s*믜", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0150", "type": "pattern", "category": "profanity", "pattern": "뉘\\s*기미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0151", "type": "pattern", "category": "profanity", "pattern": "뉘\\s*귀미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0152", "type": "pattern", "category": "profanity", "pattern": "뉘\\s*미럴", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0153", "type": "pattern", "category": "profanity", "pattern": "뉘\\s*미랄", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0154", "type": "pattern", "category": "profanity", "pattern": "뉘\\s*미롤", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0155", "type": "pattern", "category": "profanity", "pattern": "뉭\\s*미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0156", "type": "pattern", "category": "profanity", "pattern": "뉭\\s*믜", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0157", "type": "pattern", "category": "profanity", "pattern": "뉭\\s*기미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0158", "type": "pattern", "category": "profanity", "pattern": "뉭\\s*귀미", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0159", "type": "pattern", "category": "profanity", "pattern": "뉭\\s*미럴", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0160", "type": "pattern", "category": "profanity", "pattern": "뉭\\s*미랄", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0161", "type": "pattern", "category": "profanity", "pattern": "뉭\\s*미롤", "weight": 25, "tags": ["욕설", "파생"]}
+{"id": "pat-0162", "type": "pattern", "category": "profanity", "pattern": "꺼+\\s*져(?:\\s*라)?", "weight": 20, "tags": ["명령", "욕설"]}
+{"id": "pat-0163", "type": "pattern", "category": "threat", "pattern": "죽[^가-힣]{0,2}(?:어|여|라|게|니|냐|자|겠다|겠어|일래|일래요)?", "weight": 50, "tags": ["위협", "실행가능성"]}
+{"id": "pat-0164", "type": "pattern", "category": "threat", "pattern": "뒤지[^가-힣]{0,2}(?:어|여|라|게|니|냐|자|겠다|겠어|일래|일래요)?", "weight": 50, "tags": ["위협", "실행가능성"]}
+{"id": "pat-0165", "type": "pattern", "category": "threat", "pattern": "뒈지[^가-힣]{0,2}(?:어|여|라|게|니|냐|자|겠다|겠어|일래|일래요)?", "weight": 50, "tags": ["위협", "실행가능성"]}
+{"id": "pat-0166", "type": "pattern", "category": "threat", "pattern": "디지[^가-힣]{0,2}(?:어|여|라|게|니|냐|자|겠다|겠어|일래|일래요)?", "weight": 50, "tags": ["위협", "실행가능성"]}
+{"id": "pat-0167", "type": "pattern", "category": "sexual", "pattern": "강간", "weight": 60, "tags": ["범죄"]}
+{"id": "pat-0168", "type": "pattern", "category": "sexual", "pattern": "성폭행", "weight": 60, "tags": ["범죄"]}
+{"id": "pat-0169", "type": "pattern", "category": "sexual", "pattern": "윤간", "weight": 60, "tags": ["범죄"]}
+{"id": "pat-0170", "type": "pattern", "category": "sexual", "pattern": "근친상간", "weight": 60, "tags": ["범죄"]}
+{"id": "pat-0171", "type": "pattern", "category": "sexual", "pattern": "성추행", "weight": 60, "tags": ["범죄"]}
+{"id": "pat-0172", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0173", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0174", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0175", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0176", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0177", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0178", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0179", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0180", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0181", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0182", "type": "pattern", "category": "adult_service", "pattern": "(?i)성인\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0183", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0184", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0185", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0186", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0187", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0188", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0189", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0190", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0191", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0192", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0193", "type": "pattern", "category": "adult_service", "pattern": "(?i)에로\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0194", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0195", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0196", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0197", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0198", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0199", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0200", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0201", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0202", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0203", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0204", "type": "pattern", "category": "adult_service", "pattern": "(?i)야동\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0205", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0206", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0207", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0208", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0209", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0210", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0211", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0212", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0213", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0214", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0215", "type": "pattern", "category": "adult_service", "pattern": "(?i)야설\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0216", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0217", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0218", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0219", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0220", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0221", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0222", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0223", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0224", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0225", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0226", "type": "pattern", "category": "adult_service", "pattern": "(?i)누드\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0227", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0228", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0229", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0230", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0231", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0232", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0233", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0234", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0235", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0236", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0237", "type": "pattern", "category": "adult_service", "pattern": "(?i)포르노\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0238", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0239", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0240", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0241", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0242", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0243", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0244", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0245", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0246", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0247", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0248", "type": "pattern", "category": "adult_service", "pattern": "(?i)AV\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0249", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0250", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0251", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0252", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0253", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0254", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0255", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0256", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0257", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0258", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0259", "type": "pattern", "category": "adult_service", "pattern": "(?i)HENTAI\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0260", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0261", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0262", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0263", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0264", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0265", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0266", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0267", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0268", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0269", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0270", "type": "pattern", "category": "adult_service", "pattern": "(?i)헨타이\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0271", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0272", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0273", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0274", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0275", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0276", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0277", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0278", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0279", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0280", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0281", "type": "pattern", "category": "adult_service", "pattern": "(?i)몰카\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0282", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*동영상", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0283", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*사이트", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0284", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*영화", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0285", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*방송", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0286", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*자료", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0287", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*채팅", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0288", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*용품", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0289", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*갤러리", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0290", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*사진", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0291", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*클럽", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0292", "type": "pattern", "category": "adult_service", "pattern": "(?i)몸캠\\s*쇼핑몰", "weight": 20, "tags": ["사이트", "서비스"]}
+{"id": "pat-0293", "type": "pattern", "category": "sexual", "pattern": "(?i)s\\s*[e3]\\s*x", "weight": 25, "tags": ["영문", "교란"]}
+{"id": "pat-0294", "type": "pattern", "category": "adult_service", "pattern": "(?i)p\\s*o\\s*r\\s*n(?:\\s*[o0])?", "weight": 20, "tags": ["영문", "사이트"]}
+{"id": "pat-0295", "type": "pattern", "category": "profanity", "pattern": "(?i)f\\s*[*u]\\s*c\\s*k", "weight": 40, "tags": ["영문", "욕설"]}
+{"id": "pat-0296", "type": "pattern", "category": "sexual", "pattern": "(?i)s\\s*u\\s*c\\s*k", "weight": 15, "tags": ["영문", "성적문맥"]}
+{"id": "pat-0297", "type": "pattern", "category": "sexual", "pattern": "(?i)n\\s*u\\s*d\\s*e", "weight": 15, "tags": ["영문", "노출"]}
+{"id": "pat-0298", "type": "pattern", "category": "sexual", "pattern": "(?i)(?:a\\s*n\\s*a\\s*l|o\\s*r\\s*a\\s*l)", "weight": 15, "tags": ["영문", "성행위"]}
+{"id": "pat-0299", "type": "pattern", "category": "sexual", "pattern": "(?i)(?:보|버|b[o0])\\s*(?:지|ji|jy|zy|zi)", "weight": 35, "tags": ["라틴대체", "성적용어"]}
+{"id": "pat-0300", "type": "pattern", "category": "sexual", "pattern": "(?i)(?:자|ja)\\s*(?:지|ji)", "weight": 30, "tags": ["라틴대체", "성적용어"]}
+{"id": "pat-0301", "type": "pattern", "category": "sexual", "pattern": "다리\\s*벌려", "weight": 45, "tags": ["명령", "성행위"]}
+{"id": "pat-0302", "type": "pattern", "category": "sexual", "pattern": "옷\\s*벗[어여]", "weight": 30, "tags": ["명령", "노출"]}
+{"id": "pat-0303", "type": "pattern", "category": "sexual", "pattern": "옷\\s*벗겨", "weight": 35, "tags": ["명령", "강요"]}
+{"id": "pat-0304", "type": "pattern", "category": "sexual", "pattern": "뒤로\\s*넣[어어줘]", "weight": 40, "tags": ["명령", "성행위"]}
+{"id": "pat-0305", "type": "pattern", "category": "sexual", "pattern": "노콘", "weight": 20, "tags": ["노출/피임"]}
+{"id": "pat-0306", "type": "pattern", "category": "sexual", "pattern": "노브라", "weight": 20, "tags": ["노출/피임"]}
+{"id": "pat-0307", "type": "pattern", "category": "sexual", "pattern": "노팬티", "weight": 20, "tags": ["노출/피임"]}
+{"id": "pat-0308", "type": "pattern", "category": "sexual", "pattern": "노팬츠", "weight": 20, "tags": ["노출/피임"]}
+{"id": "pat-0309", "type": "pattern", "category": "adult_service", "pattern": "조건만남", "weight": 25, "tags": ["만남유도"]}
+{"id": "pat-0310", "type": "pattern", "category": "adult_service", "pattern": "원조교제", "weight": 25, "tags": ["만남유도"]}
+{"id": "pat-0311", "type": "pattern", "category": "adult_service", "pattern": "폰팅", "weight": 25, "tags": ["만남유도"]}
+{"id": "pat-0312", "type": "pattern", "category": "adult_service", "pattern": "랜덤채팅", "weight": 25, "tags": ["만남유도"]}
+{"id": "pat-0313", "type": "pattern", "category": "adult_service", "pattern": "유흥", "weight": 25, "tags": ["만남유도"]}
+{"id": "pat-0314", "type": "pattern", "category": "adult_service", "pattern": "룸싸롱", "weight": 25, "tags": ["만남유도"]}
+{"id": "pat-0315", "type": "pattern", "category": "adult_service", "pattern": "룸살롱", "weight": 25, "tags": ["만남유도"]}
+{"id": "pat-0316", "type": "pattern", "category": "adult_service", "pattern": "단란주점", "weight": 25, "tags": ["만남유도"]}
+{"id": "pat-0317", "type": "pattern", "category": "harassment", "pattern": "기집애", "weight": 20, "tags": ["모욕"]}
+{"id": "pat-0318", "type": "pattern", "category": "harassment", "pattern": "기집년", "weight": 20, "tags": ["모욕"]}
+{"id": "pat-0319", "type": "pattern", "category": "harassment", "pattern": "걸레", "weight": 20, "tags": ["모욕"]}
+{"id": "pat-0320", "type": "pattern", "category": "harassment", "pattern": "양아치", "weight": 20, "tags": ["모욕"]}
+{"id": "pat-0321", "type": "pattern", "category": "harassment", "pattern": "상놈", "weight": 20, "tags": ["모욕"]}
+{"id": "pat-0322", "type": "pattern", "category": "harassment", "pattern": "촌년", "weight": 20, "tags": ["모욕"]}
+{"id": "pat-0323", "type": "pattern", "category": "harassment", "pattern": "촌놈", "weight": 20, "tags": ["모욕"]}
+{"id": "pat-0324", "type": "pattern", "category": "harassment", "pattern": "망나니", "weight": 20, "tags": ["모욕"]}
+{"id": "pat-0325", "type": "pattern", "category": "threat", "pattern": "(?:꺼져|닥쳐|입닥쳐|쳐죽|죽여|죽일|죽인다)", "weight": 50, "tags": ["위협", "명령"]}
+{"id": "pat-0326", "type": "pattern", "category": "adult_service", "pattern": "몰\\s*카|몰래\\s*카메라", "weight": 25, "tags": ["불법촬영"]}
+{"id": "pat-0327", "type": "pattern", "category": "profanity", "pattern": "씨.{0,2}(발|밸|벌|빨)", "weight": 35, "tags": ["교란일반화"]}
+{"id": "pat-0328", "type": "pattern", "category": "profanity", "pattern": "개.{0,2}(새|쌔|색|샊|쇅|쉑|쉐).{0,2}(끼|키|기)", "weight": 40, "tags": ["교란일반화"]}
+{"id": "pat-0329", "type": "pattern", "category": "profanity", "pattern": "(씹|십).{0,2}(새|쌔|쎄).{0,2}(끼|키|기)", "weight": 45, "tags": ["교란일반화"]}
+{"id": "pat-0330", "type": "pattern", "category": "adult_service", "pattern": "(?i)하드코어", "weight": 30, "tags": ["유해물"]}
+{"id": "pat-0331", "type": "pattern", "category": "adult_service", "pattern": "(?i)스너프", "weight": 30, "tags": ["유해물"]}
+{"id": "pat-0332", "type": "pattern", "category": "adult_service", "pattern": "(?i)고어", "weight": 30, "tags": ["유해물"]}
+{"id": "pat-0333", "type": "pattern", "category": "adult_service", "pattern": "(?i)beheading", "weight": 30, "tags": ["유해물"]}
+{"id": "pat-0334", "type": "pattern", "category": "adult_service", "pattern": "(?i)gore", "weight": 30, "tags": ["유해물"]}
+{"id": "pat-0335", "type": "pattern", "category": "adult_service", "pattern": "(?i)porn\\s*hub|x\\s*videos|x\\s*hamster", "weight": 25, "tags": ["사이트"]}
+{"id": "pat-0336", "type": "pattern", "category": "sexual", "pattern": "섹스", "weight": 20, "tags": ["한글표기"]}
+{"id": "pat-0337", "type": "pattern", "category": "sexual", "pattern": "쎅스", "weight": 20, "tags": ["한글표기"]}
+{"id": "pat-0338", "type": "pattern", "category": "sexual", "pattern": "쎽스", "weight": 20, "tags": ["한글표기"]}
+{"id": "pat-0339", "type": "pattern", "category": "sexual", "pattern": "섹쓰", "weight": 20, "tags": ["한글표기"]}
+{"id": "pat-0340", "type": "pattern", "category": "sexual", "pattern": "쎅쓰", "weight": 20, "tags": ["한글표기"]}
+{"id": "pat-0341", "type": "pattern", "category": "profanity", "pattern": "훽?큐", "weight": 25, "tags": ["음차"]}
+{"id": "pat-0342", "type": "pattern", "category": "profanity", "pattern": "뻑큐", "weight": 25, "tags": ["음차"]}
+{"id": "pat-0343", "type": "pattern", "category": "profanity", "pattern": "퍼큐", "weight": 25, "tags": ["음차"]}
+{"id": "pat-0344", "type": "pattern", "category": "profanity", "pattern": "뻐큐", "weight": 25, "tags": ["음차"]}
+{"id": "pat-0345", "type": "pattern", "category": "profanity", "pattern": "빡큐", "weight": 25, "tags": ["음차"]}
+{"id": "pat-0346", "type": "pattern", "category": "profanity", "pattern": "빠큐", "weight": 25, "tags": ["음차"]}
+{"id": "pat-0347", "type": "pattern", "category": "profanity", "pattern": "(?i)s\\s*i\\s*b\\s*a\\s*l", "weight": 35, "tags": ["라틴대체"]}
+{"id": "pat-0348", "type": "pattern", "category": "sexual", "pattern": "(?i)b[o0]\\s*(?:j[iy]|z[iy])", "weight": 30, "tags": ["라틴대체"]}
+{"id": "pat-0349", "type": "pattern", "category": "sexual", "pattern": "(?i)j[a]\\s*j[iy]", "weight": 25, "tags": ["라틴대체"]}
+{"id": "pat-0350", "type": "pattern", "category": "adult_service", "pattern": "(?i)loli", "weight": 35, "tags": ["위험태그"]}
+{"id": "pat-0351", "type": "pattern", "category": "adult_service", "pattern": "(?i)ntr", "weight": 35, "tags": ["위험태그"]}
+{"id": "pat-0352", "type": "pattern", "category": "adult_service", "pattern": "(?i)shotacon", "weight": 35, "tags": ["위험태그"]}
+{"id": "pat-0353", "type": "pattern", "category": "adult_service", "pattern": "매춘", "weight": 30, "tags": ["불법"]}
+{"id": "pat-0354", "type": "pattern", "category": "adult_service", "pattern": "성매매", "weight": 30, "tags": ["불법"]}
+{"id": "pat-0355", "type": "pattern", "category": "adult_service", "pattern": "조건녀", "weight": 30, "tags": ["불법"]}
+{"id": "pat-0356", "type": "pattern", "category": "adult_service", "pattern": "유흥주점", "weight": 30, "tags": ["불법"]}
+{"id": "pat-0357", "type": "pattern", "category": "threat", "pattern": "대포통장", "weight": 45, "tags": ["범죄유도"]}
+{"id": "pat-0358", "type": "pattern", "category": "threat", "pattern": "갈취", "weight": 45, "tags": ["범죄유도"]}
+{"id": "pat-0359", "type": "pattern", "category": "threat", "pattern": "협박", "weight": 45, "tags": ["범죄유도"]}
+{"id": "pat-0360", "type": "pattern", "category": "threat", "pattern": "죽여버릴", "weight": 45, "tags": ["범죄유도"]}
+{"id": "pat-0361", "type": "pattern", "category": "threat", "pattern": "죽여버리", "weight": 45, "tags": ["범죄유도"]}
+{"id": "pat-0362", "type": "pattern", "category": "sexual", "pattern": "페라", "weight": 30, "tags": ["성행위"]}
+{"id": "pat-0363", "type": "pattern", "category": "sexual", "pattern": "펠라", "weight": 30, "tags": ["성행위"]}
+{"id": "pat-0364", "type": "pattern", "category": "sexual", "pattern": "핥아", "weight": 30, "tags": ["성행위"]}
+{"id": "pat-0365", "type": "pattern", "category": "sexual", "pattern": "빨아줘", "weight": 30, "tags": ["성행위"]}
+{"id": "pat-0366", "type": "pattern", "category": "sexual", "pattern": "따먹", "weight": 30, "tags": ["성행위"]}
+{"id": "pat-0367", "type": "pattern", "category": "sexual", "pattern": "딜도", "weight": 30, "tags": ["성행위"]}
