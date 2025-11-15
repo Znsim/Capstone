@@ -1,7 +1,7 @@
 //모바일 전용 로그인 화면
 import "package:flutter/material.dart";
-import "../data/dummy_user.dart";
 import "./signLogic.dart";
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInMobile extends StatefulWidget {
   final bool isLoginMode;
@@ -21,17 +21,21 @@ class _SignInMobileState extends State<SignInMobile> {
   bool isPasswordVisible = false;
   bool isAutoLogin = false;
 
-  //이메일 인증
-  Future<bool> sendVerificationEmailToServer(String email) async {
-    // 실제 구현 전 테스트용
-    await Future.delayed(const Duration(seconds: 1));
-    //실제 이메일 인증 API 요청으로 바꾸기
-    return true; // 항상 성공 처리
-  }
-
   void initState() {
     super.initState();
     isLoginMode = widget.isLoginMode;
+    _checkAlreadyLoggedIn();
+  }
+
+  void _checkAlreadyLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    if (isLoggedIn) {
+      // 이미 로그인된 상태면 메인으로 강제 이동 (웹/모바일 상관없이 작동)
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, '/main');
+      });
+    }
   }
 
   @override
@@ -230,10 +234,10 @@ class _SignInMobileState extends State<SignInMobile> {
             onPressed: () {
               signInLogic.performLogin(
                 context: context,
-                dummyUser: dummyUser,
                 onSuccess: () {
                   Navigator.pushNamed(context, '/main');
                 },
+                isAutoLogin: isAutoLogin,
               );
             },
             style: ElevatedButton.styleFrom(
@@ -286,7 +290,7 @@ class _SignInMobileState extends State<SignInMobile> {
         ),
         const SizedBox(height: 16),
 
-        // 이메일 입력 + 인증
+        // 이메일 입력
         const Text('이메일', style: TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         Row(
@@ -297,8 +301,6 @@ class _SignInMobileState extends State<SignInMobile> {
                 controller: signUpLogic.emailController,
                 onChanged: (value) {
                   signUpLogic.validateEmail(value, () => setState(() {}));
-                  // 이메일 인증 상태는 입력값이 바뀌면 다시 false 처리
-                  setState(() => isEmailVerified = false);
                 },
                 decoration: InputDecoration(
                   hintText: '이메일을 입력해 주세요',
@@ -315,78 +317,8 @@ class _SignInMobileState extends State<SignInMobile> {
                 ),
               ),
             ),
-            const SizedBox(width: 8),
-            ElevatedButton(
-              // onPressed: (!signUpLogic.isEmailValid || isEmailVerified)
-              //     ? null
-              //     : () async {
-              //         final email = signUpLogic.emailController.text.trim();
-              //         // 서버에 이메일 인증 요청 API 호출
-              //         final result = await sendVerificationEmailToServer(email);
-              //         if (result) {
-              //           ScaffoldMessenger.of(context).showSnackBar(
-              //             const SnackBar(
-              //               content: Text('인증 링크가 이메일로 발송되었습니다. 메일함을 확인하세요.'),
-              //             ),
-              //           );
-              //           // 인증 메일 발송 상태 안내 (아직 인증 완료 X)
-              //         } else {
-              //           ScaffoldMessenger.of(context).showSnackBar(
-              //             const SnackBar(content: Text('이메일 인증 요청에 실패했습니다.')),
-              //           );
-              //         }
-              //       },
-              //임시
-              onPressed: (!signUpLogic.isEmailValid || isEmailVerified)
-                  ? null
-                  : () async {
-                      // 여기에 선언!
-                      final email = signUpLogic.emailController.text.trim();
-
-                      final result = await sendVerificationEmailToServer(email);
-                      if (result) {
-                        setState(() {
-                          isEmailVerified = true;
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('이메일 인증이 완료되었습니다!')),
-                        );
-                      }
-                    },
-
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF8463F6),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 16,
-                ),
-              ),
-              child: const Text('인증'),
-            ),
           ],
         ),
-
-        // 인증 안내문구 (메일을 보냈음을 명확히)
-        if (!isEmailVerified && signUpLogic.isEmailValid)
-          const Padding(
-            padding: EdgeInsets.only(top: 6.0),
-            child: Text(
-              '입력하신 이메일로 인증 링크가 발송됩니다.',
-              style: TextStyle(color: Colors.deepPurple, fontSize: 13),
-            ),
-          ),
-        if (isEmailVerified)
-          const Padding(
-            padding: EdgeInsets.only(top: 6.0),
-            child: Text(
-              '이메일 인증이 완료되었습니다.',
-              style: TextStyle(color: Colors.green, fontSize: 13),
-            ),
-          ),
         const SizedBox(height: 16),
 
         // 비밀번호 입력
@@ -395,8 +327,10 @@ class _SignInMobileState extends State<SignInMobile> {
         TextField(
           obscureText: !isPasswordVisible,
           controller: signUpLogic.passwordController,
-          onChanged: (value) =>
-              signUpLogic.validatePassword(value, () => setState(() {})),
+          onChanged: (value) {
+            signUpLogic.validatePassword(value, () => setState(() {}));
+            signUpLogic.validatePasswordConfirm(signUpLogic.pwConfirmController.text, () => setState(() {}));
+          },
           decoration: InputDecoration(
             hintText: '비밀번호를 입력하세요',
             errorText: signUpLogic.pwMsgType == MessageType.error
@@ -445,10 +379,15 @@ class _SignInMobileState extends State<SignInMobile> {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: (isEmailVerified && signUpLogic.isAllValid)
-                ? () {
-                    // 회원가입 완료 처리 (ex: 서버로 회원정보 전송)
-                    Navigator.pushNamed(context, '/main');
+            onPressed: (signUpLogic.isAllValid)
+                ? () async {
+                    // 인증 링크 전송 및 대기
+                    final success = await signUpLogic.performjoin(
+                      context: context,
+                    );
+                    if (success) {
+                      Navigator.pushNamed(context, '/main');
+                    }
                   }
                 : null, // 비활성화
             style: ElevatedButton.styleFrom(

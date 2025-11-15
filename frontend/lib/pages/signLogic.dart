@@ -1,5 +1,9 @@
 // lib/screens/signin_logic.dart
 import 'package:flutter/material.dart';
+import "../backApi/user_api.dart";
+import 'package:provider/provider.dart';
+import "../data/user_provider.dart";
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum MessageType { none, error, success }
 
@@ -51,15 +55,15 @@ abstract class AuthLogicBase {
 }
 
 class SignInLogic extends AuthLogicBase {
-  void performLogin({
+  Future<void> performLogin({
     required BuildContext context,
     required VoidCallback onSuccess,
-    required Map<String, String> dummyUser,
-  }) {
+    required bool isAutoLogin,
+  }) async {
     final email = emailController.text.trim();
     final pw = passwordController.text.trim();
 
-    validateEmail(email, () {}); // 유효성 미리 반영
+    validateEmail(email, () {});
     validatePassword(pw, () {});
 
     if (!isEmailAndPwValid) {
@@ -69,14 +73,36 @@ class SignInLogic extends AuthLogicBase {
       return;
     }
 
-    if (email == dummyUser['email'] && pw == dummyUser['password']) {
+    try {
+      final result = await ApiService.login(email, pw);
+
+      print('로그인 응답: $result');
+
+      // 서버 응답에서 user 정보 꺼내기 (토큰 key - value 구조)
+      final userMap = result!.values.first;
+      final userPk = userMap['id'];
+      final username = userMap['username'];
+      final isAdmin = userMap['is_admin'] ?? false;
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('userPk', userPk);
+      await prefs.setString('username', username);
+      await prefs.setBool('isLoggedIn', true);
+      await prefs.setBool('isAdmin', isAdmin);
+
+      // Provider에 저장
+      context.read<UserProvider>().setUser(userPk, username);
       onSuccess();
-    } else {
+    } catch (e) {
       showDialog(
         context: context,
-        builder: (context) => const AlertDialog(
-          title: Text('로그인 실패'),
-          content: Text('이메일 또는 비밀번호가 일치하지 않습니다.'),
+        builder: (context) => AlertDialog(
+          title: const Text('로그인 실패'),
+          content: Text(
+            e is Exception
+                ? e.toString().replaceAll('Exception: ', '')
+                : e.toString(),
+          ),
         ),
       );
     }
@@ -85,6 +111,7 @@ class SignInLogic extends AuthLogicBase {
   bool get isAllValid => isEmailAndPwValid;
 }
 
+// 회원가입 로직
 class SignUpLogic extends AuthLogicBase {
   final nameController = TextEditingController();
   final pwConfirmController = TextEditingController();
@@ -128,4 +155,41 @@ class SignUpLogic extends AuthLogicBase {
   }
 
   bool get isAllValid => isNameValid && isEmailAndPwValid && isPwConfirmValid;
+
+  // 회원가입 API 호출 함수
+  Future<bool> performjoin({required BuildContext context}) async {
+    final email = emailController.text.trim();
+    final pw = passwordController.text.trim();
+    final name = nameController.text.trim();
+
+    if (!isAllValid) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('입력값을 다시 확인해 주세요.')));
+      return false;
+    }
+
+    try {
+      await ApiService.join(username: name, email: email, password: pw);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('인증 메일이 전송되었습니다. 메일함을 확인하세요.')),
+      );
+
+      return true;
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('회원가입 실패'),
+          content: Text(
+            e is Exception
+                ? e.toString().replaceAll('Exception: ', '')
+                : e.toString(),
+          ),
+        ),
+      );
+      return false;
+    }
+  }
 }

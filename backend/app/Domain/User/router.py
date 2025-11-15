@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import HTMLResponse
 from core.database import provide_session
 from fastapi import HTTPException, status
-from .schema import (UserDTO,LoginDTO)
+from .schema import UserDTO,LoginDTO
 from core.dependencies import hash_password
 from .crud import UserCRUD
 from core.dependencies import TOKEN_TYPE
@@ -17,24 +17,27 @@ router = APIRouter(
 async def Join(payload:UserDTO,db=Depends(provide_session)):
     crud = UserCRUD(session=db)
     payload.password = hash_password(payload.password)
-    user = await crud.create_user(payload=payload)
-    send_verification_email(user.email)
-    return user
+    user_data = await crud.create_user(payload=payload)
+    send_verification_email(payload.email)
+    return user_data
 
-@router.get("/login")
-async def Login(email:str,password:str,db=Depends(provide_session)):
+@router.post("/login")
+async def Login(payload: LoginDTO, db=Depends(provide_session)):
     crud = UserCRUD(session=db)
-    print(email)
-    print(password)
-    token = await crud.Login(gemail=email, password=password) 
+    print(payload.email)
+    print(payload.password)
+    token = await crud.login(email=payload.email, password=payload.password) 
     print(token)
     if token:
-        return {TOKEN_TYPE+" "+token}
+        # 사용자 정보 별도 조회
+        user_info = await crud.get_user_by_email(email=payload.email)
+        # 사용자 정보
+        return {TOKEN_TYPE + " " + token: user_info}
 
 @router.get("/emailCheck")
 async def EmailCheck(email:str,db=Depends(provide_session)):
     crud = UserCRUD(session=db)
-    if await crud.get_user_by_email(gemail=email):  
+    if await crud.get_user_by_email(email=email):  
         return True
     else:
         return False
@@ -44,7 +47,7 @@ async def AuthCheck(token: str, db=Depends(provide_session)):
     crud = UserCRUD(session=db)
     if verify_email(token=token):
         email = get_email_by_token(token=token)
-        if await crud.user_auth_change(gemail=email):  
+        if await crud.authenticate_user(email=email):  
             return """
             <html>
                 <head><title>Success</title></head>
@@ -75,10 +78,10 @@ async def AuthCheck(token: str, db=Depends(provide_session)):
         </html>
         """
 
-@router.get("/nickCheck")
-async def NickCheck(nick:str,db=Depends(provide_session)):
+@router.get("/nameCheck")
+async def NameCheck(name:str,db=Depends(provide_session)):
     crud = UserCRUD(session=db)
-    if await crud.get_user_by_nick(nickname=nick):  
+    if await crud.get_user_by_username(username=name):  
         return True
     else:
         return False

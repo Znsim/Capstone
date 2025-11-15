@@ -1,6 +1,6 @@
 from typing import Optional
 from .config import DefaultConfig
-
+from fastapi import Depends
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
@@ -61,3 +61,7 @@ async def provide_session():
         await session.commit()
     finally:
         await session.close()
+
+async def get_db() -> AsyncSession:
+    async for session in provide_session():
+        yield session
