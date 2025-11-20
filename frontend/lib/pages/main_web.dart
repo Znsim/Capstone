@@ -14,7 +14,7 @@ class MainPageWeb extends StatefulWidget {
 class _MainPageWebState extends State<MainPageWeb> {
   final TextEditingController _textController = TextEditingController();
   Uint8List? _imageBytes;
-  String resultText = "검사한 콘텐츠를 업로드하거나 입력해주세요.";
+  String resultText = "검사";
 
   Future<void> _pickImage() async {
     final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
