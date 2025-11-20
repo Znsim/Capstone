@@ -1,5 +1,5 @@
 fastapi==0.121.2
-numpy==2.3.4
+numpy
 openai==2.8.0
 passlib==1.7.4
 pgvector==0.4.1
