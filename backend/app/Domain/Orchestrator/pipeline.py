@@ -4,6 +4,9 @@ from __future__ import annotations
 import logging
 from typing import List
 
+# 🔹 FastAPI 스레드풀 유틸
+from fastapi.concurrency import run_in_threadpool
+
 # 🔹 최신 엔진 모듈 (backend/app/engine 안)
 from engine.rag_engine import get_rag_context
 from engine.rule_engine import calculate_rule_score
@@ -12,7 +15,6 @@ from engine.llm_analyzer import get_final_analysis_from_llm
 # 🔹 Orchestrator 유틸 (응답 스키마 + 앙상블)
 from .ensemble_slot import combine_scores, _score_to_label
 from .models import AnalyzeRequest, AnalyzeResult, RuleHit
-
 
 logger = logging.getLogger(__name__)
 
@@ -30,16 +32,21 @@ async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
     """
     user_text = req.text
 
-    # 1) RAG 검색 (동기 함수라 그냥 호출)
+    # 1) RAG 검색 — 동기 함수를 스레드풀에서 실행
     try:
-        contexts = get_rag_context(user_text, top_k=req.top_k)
+        contexts = await run_in_threadpool(
+            get_rag_context,
+            user_text,
+            top_k=req.top_k,
+        )
     except Exception as e:
         logger.exception("RAG 검색 실패: %s", e)
         contexts = []
 
-    # 2) 규칙 기반 점수 (0.0 또는 1.0)
+    # 2) 규칙 기반 점수 — 동기 함수 스레드풀 실행
     try:
-        rule_score = float(calculate_rule_score(user_text))
+        rule_score_raw = await run_in_threadpool(calculate_rule_score, user_text)
+        rule_score = float(rule_score_raw)
     except Exception as e:
         logger.exception("규칙 엔진 오류: %s", e)
         rule_score = 0.0
@@ -57,12 +64,16 @@ async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
             )
         )
 
-    # 3) LLM 분석
+    # 3) LLM 분석 — 가장 오래 걸리는 부분, 반드시 스레드풀 사용
     llm_score = 0.0
     violated_law = ""
     analysis_text = ""
     try:
-        llm_result = get_final_analysis_from_llm(user_text, contexts)
+        llm_result = await run_in_threadpool(
+            get_final_analysis_from_llm,
+            user_text,
+            contexts,
+        )
         llm_score = float(llm_result.get("score_llm", 0.0))
         violated_law = llm_result.get("violated_law", "") or ""
         analysis_text = llm_result.get("analysis", "") or ""
