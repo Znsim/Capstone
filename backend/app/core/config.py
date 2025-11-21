@@ -1,3 +1,4 @@
+from typing import Optional
 from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from dotenv import load_dotenv
@@ -19,7 +20,7 @@ class DefaultConfig(BaseSettings):
     jwt_expire_minutes: int = Field(alias="JWT_EXPIRE_MINUTES")
 
     # --- Orchestrator용 ---
-    openai_api_key: str | None = Field(default=None, alias="OPENAI_API_KEY")
+    openai_api_key: Optional[str] = Field(default=None, alias="OPENAI_API_KEY")
     llm_model: str = Field(default="gpt-5-mini", alias="LLM_MODEL")
     retrieval_base_url: str = Field(default="http://localhost:3000", alias="RETRIEVAL_BASE_URL")
 
