@@ -1,8 +1,8 @@
 # Domain/Orchestrator/router.py
-from fastapi import APIRouter, HTTPException, BackgroundTasks # 1. BackgroundTasks 추가
-from .models import AnalyzeRequest
-# AnalyzeResult는 즉시 반환되지 않으므로 response_model에서 뺍니다.
-from .pipeline import process_analysis_background # 2. 백그라운드용 래퍼 함수 임포트
+from fastapi import APIRouter, HTTPException, BackgroundTasks
+from .models import AnalyzeRequest, AnalyzeResult
+# process_analysis_background 함수를 import 합니다.
+from .pipeline import run_analyze, process_analysis_background 
 
 router = APIRouter(prefix="/orchestrator", tags=["Orchestrator"])
 
@@ -10,22 +10,25 @@ router = APIRouter(prefix="/orchestrator", tags=["Orchestrator"])
 async def health():
     return {"ok": True}
 
-# 3. response_model 제거 (결과를 바로 못 줌)
-@router.post("/analyze") 
+# ⚠️ 주의: response_model=AnalyzeResult를 제거했습니다. 
+# 이제 결과 객체를 바로 반환하지 않고 단순 메시지만 반환하기 때문입니다.
+@router.post("/analyze")
 async def analyze(req: AnalyzeRequest, background_tasks: BackgroundTasks):
     try:
-        # 4. 백그라운드 작업 등록 (기다리지 않고 즉시 통과됨)
-        # run_analyze를 직접 부르는 게 아니라, 결과를 저장까지 해주는 래퍼 함수를 호출합니다.
+        # 1. 백그라운드 작업 등록 (기다리지 않음)
+        # process_analysis_background 함수에 req 데이터를 넘겨서 실행시킵니다.
         background_tasks.add_task(process_analysis_background, req)
         
-        # 5. 사용자에게는 "접수됨" 메시지만 즉시 반환 (0.1초 소요)
+        # 2. 클라이언트에게는 즉시 응답 (0.1초 소요)
         return {
             "status": "queued",
-            "message": "분석 요청이 백그라운드에서 시작되었습니다. 결과는 나중에 확인하세요."
+            "message": "분석 요청이 접수되었습니다. 결과는 서버 로그 또는 DB를 확인하세요."
         }
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/feedback")
 async def feedback(payload: dict):
+    # 나중에 Redis나 DB로 피드백 저장 예정
     return {"ok": True, "message": "Feedback received"}
