@@ -18,17 +18,39 @@ from .models import AnalyzeRequest, AnalyzeResult, RuleHit
 
 logger = logging.getLogger(__name__)
 
+# ==========================================
+# [추가됨] 백그라운드 처리용 래퍼 함수
+# ==========================================
+async def process_analysis_background(req: AnalyzeRequest):
+    """
+    백그라운드에서 실행되는 함수입니다.
+    사용자에게 응답을 보낸 후 뒤에서 조용히 실행됩니다.
+    """
+    logger.info(f"🚀 [Background] 분석 작업 시작... (Text: {req.text[:20]}...)")
+    
+    try:
+        # 기존의 무거운 run_analyze 함수 실행
+        result: AnalyzeResult = await run_analyze(req)
+        
+        # ★ 중요: 결과를 HTTP로 반환할 수 없으므로, 여기서 DB에 저장하거나 로그를 찍어야 합니다.
+        logger.info("✅ [Background] 분석 완료!")
+        logger.info(f" - 점수: {result.score}")
+        logger.info(f" - 리스크 등급: {result.risk}")
+        logger.info(f" - 전체 결과: {result}")
 
+        # TODO: 여기에 DB 저장 코드를 추가하세요.
+        # 예: await save_result_to_db(req.user_id, result)
+
+    except Exception as e:
+        logger.exception(f"❌ [Background] 분석 중 오류 발생: {e}")
+
+
+# ==========================================
+# 기존 분석 로직 (변경 없음)
+# ==========================================
 async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
     """
     Orchestrator 기준 + 최신 엔진 결합 파이프라인
-
-    1) engine.rag_engine → RAG 컨텍스트 검색
-    2) engine.rule_engine → 규칙 점수 계산
-    3) engine.llm_analyzer → LLM 점수 / 법률 / 분석 받기
-    4) ensemble_slot.combine_scores → 최종 score 계산
-    5) score → risk 라벨 매핑 (_score_to_label)
-    6) AnalyzeResult 형태로 응답
     """
     user_text = req.text
 
@@ -53,7 +75,6 @@ async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
 
     rule_hits: List[RuleHit] = []
     if rule_score > 0.0:
-        # 카테고리/히트 상세까지는 rule_engine에 없으므로 최소 정보만 채움
         rule_hits.append(
             RuleHit(
                 category="RuleEngine",
@@ -64,7 +85,7 @@ async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
             )
         )
 
-    # 3) LLM 분석 — 가장 오래 걸리는 부분, 반드시 스레드풀 사용
+    # 3) LLM 분석 — 가장 오래 걸리는 부분
     llm_score = 0.0
     violated_law = ""
     analysis_text = ""
@@ -80,7 +101,7 @@ async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
     except Exception as e:
         logger.exception("LLM 분석 엔진 오류: %s", e)
 
-    # 4) 앙상블 (0.7 * LLM + 0.3 * RULE) — 기존 규칙 유지
+    # 4) 앙상블
     final_score = combine_scores(llm_score, rule_score, w_llm=0.7)
     final_label = _score_to_label(final_score)
 
@@ -99,6 +120,6 @@ async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
         rule_score=rule_score,
         rule_hits=rule_hits,
         reasons=reasons,
-        rewrites=[],   # llm_analyzer는 rewrites 안 주니까 일단 비움
+        rewrites=[],   
         contexts=contexts,
     )
