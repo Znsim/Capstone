@@ -8,6 +8,7 @@ from typing import List
 from fastapi.concurrency import run_in_threadpool
 
 # 🔹 최신 엔진 모듈 (backend/app/engine 안)
+# (경로가 맞는지 확인해주세요. 보통 app.engine 또는 engine 등으로 설정됨)
 from engine.rag_engine import get_rag_context
 from engine.rule_engine import calculate_rule_score
 from engine.llm_analyzer import get_final_analysis_from_llm
@@ -19,34 +20,7 @@ from .models import AnalyzeRequest, AnalyzeResult, RuleHit
 logger = logging.getLogger(__name__)
 
 # ==========================================
-# [추가됨] 백그라운드 처리용 래퍼 함수
-# ==========================================
-async def process_analysis_background(req: AnalyzeRequest):
-    """
-    백그라운드에서 실행되는 함수입니다.
-    사용자에게 응답을 보낸 후 뒤에서 조용히 실행됩니다.
-    """
-    logger.info(f"🚀 [Background] 분석 작업 시작... (Text: {req.text[:20]}...)")
-    
-    try:
-        # 기존의 무거운 run_analyze 함수 실행
-        result: AnalyzeResult = await run_analyze(req)
-        
-        # ★ 중요: 결과를 HTTP로 반환할 수 없으므로, 여기서 DB에 저장하거나 로그를 찍어야 합니다.
-        logger.info("✅ [Background] 분석 완료!")
-        logger.info(f" - 점수: {result.score}")
-        logger.info(f" - 리스크 등급: {result.risk}")
-        logger.info(f" - 전체 결과: {result}")
-
-        # TODO: 여기에 DB 저장 코드를 추가하세요.
-        # 예: await save_result_to_db(req.user_id, result)
-
-    except Exception as e:
-        logger.exception(f"❌ [Background] 분석 중 오류 발생: {e}")
-
-
-# ==========================================
-# 기존 분석 로직 (변경 없음)
+# 핵심 분석 로직
 # ==========================================
 async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
     """
@@ -120,6 +94,6 @@ async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
         rule_score=rule_score,
         rule_hits=rule_hits,
         reasons=reasons,
-        rewrites=[],   
+        rewrites=[],    
         contexts=contexts,
     )
