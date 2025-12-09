@@ -4,7 +4,11 @@ from __future__ import annotations
 import logging
 from typing import List
 
+# 🔹 FastAPI 스레드풀 유틸
+from fastapi.concurrency import run_in_threadpool
+
 # 🔹 최신 엔진 모듈 (backend/app/engine 안)
+# (경로가 맞는지 확인해주세요. 보통 app.engine 또는 engine 등으로 설정됨)
 from engine.rag_engine import get_rag_context
 from engine.rule_engine import calculate_rule_score
 from engine.llm_analyzer import get_final_analysis_from_llm
@@ -13,40 +17,38 @@ from engine.llm_analyzer import get_final_analysis_from_llm
 from .ensemble_slot import combine_scores, _score_to_label
 from .models import AnalyzeRequest, AnalyzeResult, RuleHit
 
-
 logger = logging.getLogger(__name__)
 
-
+# ==========================================
+# 핵심 분석 로직
+# ==========================================
 async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
     """
     Orchestrator 기준 + 최신 엔진 결합 파이프라인
-
-    1) engine.rag_engine → RAG 컨텍스트 검색
-    2) engine.rule_engine → 규칙 점수 계산
-    3) engine.llm_analyzer → LLM 점수 / 법률 / 분석 받기
-    4) ensemble_slot.combine_scores → 최종 score 계산
-    5) score → risk 라벨 매핑 (_score_to_label)
-    6) AnalyzeResult 형태로 응답
     """
     user_text = req.text
 
-    # 1) RAG 검색 (동기 함수라 그냥 호출)
+    # 1) RAG 검색 — 동기 함수를 스레드풀에서 실행
     try:
-        contexts = get_rag_context(user_text, top_k=req.top_k)
+        contexts = await run_in_threadpool(
+            get_rag_context,
+            user_text,
+            top_k=req.top_k,
+        )
     except Exception as e:
         logger.exception("RAG 검색 실패: %s", e)
         contexts = []
 
-    # 2) 규칙 기반 점수 (0.0 또는 1.0)
+    # 2) 규칙 기반 점수 — 동기 함수 스레드풀 실행
     try:
-        rule_score = float(calculate_rule_score(user_text))
+        rule_score_raw = await run_in_threadpool(calculate_rule_score, user_text)
+        rule_score = float(rule_score_raw)
     except Exception as e:
         logger.exception("규칙 엔진 오류: %s", e)
         rule_score = 0.0
 
     rule_hits: List[RuleHit] = []
     if rule_score > 0.0:
-        # 카테고리/히트 상세까지는 rule_engine에 없으므로 최소 정보만 채움
         rule_hits.append(
             RuleHit(
                 category="RuleEngine",
@@ -57,19 +59,23 @@ async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
             )
         )
 
-    # 3) LLM 분석
+    # 3) LLM 분석 — 가장 오래 걸리는 부분
     llm_score = 0.0
     violated_law = ""
     analysis_text = ""
     try:
-        llm_result = get_final_analysis_from_llm(user_text, contexts)
+        llm_result = await run_in_threadpool(
+            get_final_analysis_from_llm,
+            user_text,
+            contexts,
+        )
         llm_score = float(llm_result.get("score_llm", 0.0))
         violated_law = llm_result.get("violated_law", "") or ""
         analysis_text = llm_result.get("analysis", "") or ""
     except Exception as e:
         logger.exception("LLM 분석 엔진 오류: %s", e)
 
-    # 4) 앙상블 (0.7 * LLM + 0.3 * RULE) — 기존 규칙 유지
+    # 4) 앙상블
     final_score = combine_scores(llm_score, rule_score, w_llm=0.7)
     final_label = _score_to_label(final_score)
 
@@ -88,6 +94,6 @@ async def run_analyze(req: AnalyzeRequest) -> AnalyzeResult:
         rule_score=rule_score,
         rule_hits=rule_hits,
         reasons=reasons,
-        rewrites=[],   # llm_analyzer는 rewrites 안 주니까 일단 비움
+        rewrites=[],    
         contexts=contexts,
     )

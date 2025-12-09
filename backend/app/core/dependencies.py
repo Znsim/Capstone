@@ -12,6 +12,7 @@ from core.database import provide_session
 from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends
+import os
 
 config = get_config()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -65,7 +66,11 @@ def create_email_verification_token(email: str) -> str:
 
 def send_verification_email(user_email: str):
     token = create_email_verification_token(user_email)
-    verification_link = f"http://localhost:8000/users/verify-email?token={token}"  # 배포 시 도메인으로 수정 필요
+
+    # 환경변수 DOMAIN 값 가져오기 (없으면 로컬 기본값 사용)
+    base_url = os.getenv("DOMAIN", "http://localhost:8000")
+
+    verification_link = f"{base_url}/users/verify-email?token={token}"
 
     subject = "Email Verification"
     body = f"Please click the following link to verify your email: {verification_link}"
