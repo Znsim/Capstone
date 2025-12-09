@@ -1,12 +1,17 @@
-// lib/screens/signin_logic.dart
+// [기존 파일 위치: lib/pages/signLogic.dart]
+// [새로운 파일 위치: lib/features/auth/auth_controller.dart]
+
+//경로 설정
 import 'package:flutter/material.dart';
-import "../backApi/user_api.dart";
+import "../../services/user_api.dart";
 import 'package:provider/provider.dart';
-import "../data/user_provider.dart";
+import '../../state/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// [기존 파일 위치: lib/pages/signLogic.dart]
 enum MessageType { none, error, success }
 
+// [기존 파일 위치: lib/pages/signLogic.dart]
 abstract class AuthLogicBase {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -54,6 +59,7 @@ abstract class AuthLogicBase {
   bool get isEmailAndPwValid => isEmailValid && isPwValid;
 }
 
+// [기존 파일 위치: lib/pages/signLogic.dart]
 class SignInLogic extends AuthLogicBase {
   Future<void> performLogin({
     required BuildContext context,
@@ -74,6 +80,7 @@ class SignInLogic extends AuthLogicBase {
     }
 
     try {
+      // [주의] ApiService 클래스가 lib/services/user_api.dart 파일에 있어야 합니다.
       final result = await ApiService.login(email, pw);
 
       print('로그인 응답: $result');
@@ -91,7 +98,8 @@ class SignInLogic extends AuthLogicBase {
       await prefs.setBool('isAdmin', isAdmin);
 
       // Provider에 저장
-      context.read<UserProvider>().setUser(userPk, username);
+      // [주의] UserProvider 클래스가 lib/state/user_provider.dart 파일에 있어야 합니다.
+      context.read<UserProvider>().setUser(userPk, username); 
       onSuccess();
     } catch (e) {
       showDialog(
@@ -111,6 +119,7 @@ class SignInLogic extends AuthLogicBase {
   bool get isAllValid => isEmailAndPwValid;
 }
 
+// [기존 파일 위치: lib/pages/signLogic.dart]
 // 회원가입 로직
 class SignUpLogic extends AuthLogicBase {
   final nameController = TextEditingController();
@@ -130,7 +139,8 @@ class SignUpLogic extends AuthLogicBase {
       nameMsgType = MessageType.error;
       isNameValid = false;
     } else if (value.trim().length >= 2) {
-      nameMsg = '올바른 이름입니다.';
+      // [주의] 유효성 검사 성공 시에도 '올바른 이름입니다.' 메시지가 뜨지 않게 수정하는 것을 고려해 보세요.
+      nameMsg = '올바른 이름입니다.'; 
       nameMsgType = MessageType.success;
       isNameValid = true;
     } else {
@@ -143,7 +153,8 @@ class SignUpLogic extends AuthLogicBase {
 
   void validatePasswordConfirm(String value, VoidCallback update) {
     if (value == passwordController.text) {
-      pwConfirmMsg = '비밀번호가 일치합니다.';
+      // [주의] 유효성 검사 성공 시에도 '비밀번호가 일치합니다.' 메시지가 뜨지 않게 수정하는 것을 고려해 보세요.
+      pwConfirmMsg = '비밀번호가 일치합니다.'; 
       pwConfirmMsgType = MessageType.success;
       isPwConfirmValid = true;
     } else {
@@ -170,7 +181,8 @@ class SignUpLogic extends AuthLogicBase {
     }
 
     try {
-      await ApiService.join(username: name, email: email, password: pw);
+      // [주의] ApiService 클래스가 lib/services/user_api.dart 파일에 있어야 합니다.
+      await ApiService.join(username: name, email: email, password: pw); 
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('인증 메일이 전송되었습니다. 메일함을 확인하세요.')),

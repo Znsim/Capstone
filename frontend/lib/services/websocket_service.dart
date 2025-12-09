@@ -1,7 +1,7 @@
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/status.dart' as status;
-import '../backApi/user_api.dart';
-import '../pages/chatInquiryLogic.dart';
+import 'user_api.dart';
+import '../featutres/chat/chat_controller.dart';
 import 'dart:convert';
 
 class ChatInquirySocket {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../backApi/user_api.dart';
-import '../pages/chatInquirySocket.dart';
+import 'package:flutter/foundation.dart'; // ValueListenable 사용을 위해 필요
+import '../../services/user_api.dart';
+import '../../services/websocket_service.dart';
 import 'dart:convert';
 
 // 메시지 데이터 모델
@@ -25,11 +26,18 @@ class ChatInquiryLogic {
   final FocusNode focusNode = FocusNode();
   final ScrollController scrollController = ScrollController();
 
-  final ValueNotifier<List<ChatMessage>> messages = ValueNotifier([]);
-  final ValueNotifier<Map<int, dynamic>> allConversations = ValueNotifier({});
-  final ValueNotifier<int?> selectedUserPk = ValueNotifier(null);
-  final ValueNotifier<Map<int, Map<String, dynamic>>> userInfoMap =
-      ValueNotifier({});
+  // [수정됨] Private ValueNotifier로 변경 (내부 상태 변경용)
+  final ValueNotifier<List<ChatMessage>> _messagesNotifier = ValueNotifier([]);
+  final ValueNotifier<Map<int, dynamic>> _allConversationsNotifier = ValueNotifier({});
+  final ValueNotifier<int?> _selectedUserPkNotifier = ValueNotifier(null);
+  final ValueNotifier<Map<int, Map<String, dynamic>>> _userInfoMapNotifier = ValueNotifier({});
+
+  // [수정됨] Public Getter 추가 (외부 노출용 - ValueListenable 타입 명시로 오류 해결)
+  ValueListenable<List<ChatMessage>> get messages => _messagesNotifier;
+  ValueListenable<Map<int, dynamic>> get allConversations => _allConversationsNotifier;
+  ValueListenable<int?> get selectedUserPk => _selectedUserPkNotifier;
+  ValueListenable<Map<int, Map<String, dynamic>>> get userInfoMap => _userInfoMapNotifier;
+
 
   late bool isAdmin;
   late int userPk;
@@ -40,7 +48,16 @@ class ChatInquiryLogic {
     controller.dispose();
     focusNode.dispose();
     scrollController.dispose();
+    // Notifier들도 dispose 해주는 것이 좋습니다.
+    _messagesNotifier.dispose();
+    _allConversationsNotifier.dispose();
+    _selectedUserPkNotifier.dispose();
+    _userInfoMapNotifier.dispose();
     socket.dispose();
+  }
+
+  void clearSelectedUser() {
+    _selectedUserPkNotifier.value = null;
   }
 
   // 초기화 -------------------------------------------
@@ -59,7 +76,7 @@ class ChatInquiryLogic {
     // 유저: 본인 대화 로드
     else {
       await loadUserMessages();
-      selectedUserPk.value = userPk;
+      _selectedUserPkNotifier.value = userPk; // 수정됨
       initMessagesForConversation(userPk);
     }
 
@@ -73,11 +90,11 @@ class ChatInquiryLogic {
 
   // 선택한 대화창에 표시할 메시지인가?
   bool shouldShowInCurrentChat(int senderPk, bool isFromAdmin) =>
-      !isAdmin || selectedUserPk.value == senderPk || isFromAdmin;
+      !isAdmin || _selectedUserPkNotifier.value == senderPk || isFromAdmin; // 수정됨
 
   // 메시지 중복 검사
   bool isDuplicateMessage(int convPk, int msgId) {
-    final convList = allConversations.value[convPk]?["messages"] ?? [];
+    final convList = _allConversationsNotifier.value[convPk]?["messages"] ?? []; // 수정됨
     return convList.any((m) => m["id"] == msgId);
   }
 
@@ -99,7 +116,7 @@ class ChatInquiryLogic {
 
   // 특정 대화 목록 초기화
   void initMessagesForConversation(int convPk) {
-    final conv = allConversations.value[convPk];
+    final conv = _allConversationsNotifier.value[convPk]; // 수정됨
     if (conv == null) return;
 
     final loadedMsgs =
@@ -108,7 +125,7 @@ class ChatInquiryLogic {
             .toList()
           ..sort((a, b) => a.id.compareTo(b.id)); // id 정렬
 
-    messages.value = loadedMsgs;
+    _messagesNotifier.value = loadedMsgs; // 수정됨
     scrollToBottom();
   }
 
@@ -126,7 +143,7 @@ class ChatInquiryLogic {
 
     // 메시지 대상 PK 결정
     final targetPk =
-        userPkOverride ?? (isFromAdmin ? selectedUserPk.value : userPk);
+        userPkOverride ?? (isFromAdmin ? _selectedUserPkNotifier.value : userPk); // 수정됨
     if (targetPk == null || targetPk == 0) return;
 
     // 서버에 전송할 JSON 메시지 생성
@@ -142,7 +159,7 @@ class ChatInquiryLogic {
     final now = DateTime.now();
 
     // tempId 계산 (현재 채팅방의 최대 ID + 1)
-    final currentMessages = allConversations.value[targetPk]?["messages"] ?? [];
+    final currentMessages = _allConversationsNotifier.value[targetPk]?["messages"] ?? []; // 수정됨
     final maxId = currentMessages.isEmpty
         ? 0
         : currentMessages
@@ -151,7 +168,7 @@ class ChatInquiryLogic {
     final tempId = maxId + 1;
 
     // UI에 즉시 메시지 추가
-    if (targetPk == selectedUserPk.value) {
+    if (targetPk == _selectedUserPkNotifier.value) { // 수정됨
       addMessageToUI(
         ChatMessage(id: tempId, text: rawText, isMe: true, timestamp: now),
       );
@@ -172,7 +189,7 @@ class ChatInquiryLogic {
 
   // ui 새 메시지 추가
   void addMessageToUI(ChatMessage msg) {
-    messages.value = [...messages.value, msg];
+    _messagesNotifier.value = [..._messagesNotifier.value, msg]; // 수정됨
     scrollToBottom();
   }
 
@@ -185,7 +202,7 @@ class ChatInquiryLogic {
     required bool isFromAdmin,
     required DateTime timestamp,
   }) {
-    final updated = Map<int, dynamic>.from(allConversations.value);
+    final updated = Map<int, dynamic>.from(_allConversationsNotifier.value); // 수정됨
     updated[pk] ??= {"messages": <Map<String, dynamic>>[]};
 
     (updated[pk]["messages"] as List).add({
@@ -196,7 +213,7 @@ class ChatInquiryLogic {
       "created_at": timestamp.toIso8601String(),
     });
 
-    allConversations.value = updated;
+    _allConversationsNotifier.value = updated; // 수정됨
   }
 
   // 유저 메시지 로딩 ---------------------------------
@@ -204,8 +221,8 @@ class ChatInquiryLogic {
     if (userPk == 0) return;
     try {
       final serverMessages = await ApiService.fetchUserMessages(userPk);
-      messages.value = _convertToMessages(serverMessages, isAdminView: false);
-      allConversations.value = {
+      _messagesNotifier.value = _convertToMessages(serverMessages, isAdminView: false); // 수정됨
+      _allConversationsNotifier.value = { // 수정됨
         userPk: {"messages": serverMessages},
       };
     } catch (e) {
@@ -226,8 +243,8 @@ class ChatInquiryLogic {
         if (intKey != null) convMap[intKey] = value;
       });
 
-      userInfoMap.value = _mapUsers(usersList);
-      allConversations.value = convMap;
+      _userInfoMapNotifier.value = _mapUsers(usersList); // 수정됨
+      _allConversationsNotifier.value = convMap; // 수정됨
     } catch (e) {
       print("관리자 전체 대화 불러오기 실패: $e");
     }
@@ -247,9 +264,9 @@ class ChatInquiryLogic {
 
   // 유저 선택 (관리자)
   Future<void> selectUser(int userPk, {required bool isAdmin}) async {
-    selectedUserPk.value = userPk;
-    final messagesJson = allConversations.value[userPk]?["messages"] ?? [];
-    messages.value = _convertToMessages(messagesJson, isAdminView: isAdmin);
+    _selectedUserPkNotifier.value = userPk; // 수정됨
+    final messagesJson = _allConversationsNotifier.value[userPk]?["messages"] ?? []; // 수정됨
+    _messagesNotifier.value = _convertToMessages(messagesJson, isAdminView: isAdmin); // 수정됨
     scrollToBottom();
   }
 
@@ -275,7 +292,7 @@ class ChatInquiryLogic {
 
   // 미리보기 텍스트
   String getLastMessagePreview(int userPk) {
-    final userData = allConversations.value[userPk];
+    final userData = _allConversationsNotifier.value[userPk]; // 수정됨
     if (userData == null) return '';
     final List messages = userData["messages"];
     if (messages.isEmpty) return '';
@@ -328,8 +345,8 @@ class ChatInquiryLogic {
   // 날짜 구분선 표시 여부
   bool shouldShowDateDivider(int index) {
     if (index == 0) return true;
-    final prev = messages.value[index - 1].timestamp;
-    final curr = messages.value[index].timestamp;
+    final prev = _messagesNotifier.value[index - 1].timestamp; // 수정됨
+    final curr = _messagesNotifier.value[index].timestamp; // 수정됨
     return prev.year != curr.year ||
         prev.month != curr.month ||
         prev.day != curr.day;

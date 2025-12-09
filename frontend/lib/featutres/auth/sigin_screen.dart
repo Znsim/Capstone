@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
-import './signLogic.dart';
+// import 'package:flutter/foundation.dart'; // kIsWeb 필요 시 사용
+import 'package:provider/provider.dart'; // Provider 사용 시 필요 (없으면 주석 처리)
+import './auth_controller.dart'; 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SignInWeb extends StatefulWidget {
+enum MessageType { none, error, success }
+
+class SigninScreen extends StatefulWidget {
   final bool isLoginMode;
 
-  const SignInWeb({Key? key, this.isLoginMode = true}) : super(key: key);
+  const SigninScreen({Key? key, this.isLoginMode = true}) : super(key: key);
 
   @override
-  _SignInWebState createState() => _SignInWebState();
+  _SigninScreenState createState() => _SigninScreenState();
 }
 
-class _SignInWebState extends State<SignInWeb> {
+class _SigninScreenState extends State<SigninScreen> {
   final signInLogic = SignInLogic();
   final signUpLogic = SignUpLogic();
 
   bool isLoginMode = true;
-  bool isEmailVerified = false;
   bool isPasswordVisible = false;
   bool isAutoLogin = false;
 
   @override
   void initState() {
     super.initState();
-    isLoginMode = widget.isLoginMode; // <- 외부에서 값 받아옴!
-
+    isLoginMode = widget.isLoginMode;
     _checkAlreadyLoggedIn();
   }
 
@@ -32,7 +34,6 @@ class _SignInWebState extends State<SignInWeb> {
     final prefs = await SharedPreferences.getInstance();
     final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
     if (isLoggedIn) {
-      // 이미 로그인된 상태면 메인으로 강제 이동 (웹/모바일 상관없이 작동)
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacementNamed(context, '/main');
       });
@@ -41,8 +42,19 @@ class _SignInWebState extends State<SignInWeb> {
 
   @override
   Widget build(BuildContext context) {
+    // ✅ 현재 테마 모드 감지
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    // --- 테마별 색상 정의 ---
+    final bgColor = isDark ? const Color(0xFF121212) : const Color(0xFF8463F6); // 배경색
+    final cardColor = isDark ? const Color(0xFF1E1E1E) : Colors.white; // 카드 배경색
+    final textColor = isDark ? Colors.white : Colors.black87; // 기본 텍스트 색상
+    final subTextColor = isDark ? Colors.grey[400] : Colors.black54; // 보조 텍스트 색상
+    final inputFillColor = isDark ? const Color(0xFF2C2C2C) : Colors.white; // 입력창 배경색
+    final primaryColor = const Color(0xFF8463F6); // 메인 브랜드 컬러 (보라색)
+
     return Scaffold(
-      backgroundColor: const Color(0xFF8463F6),
+      backgroundColor: bgColor,
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -50,17 +62,25 @@ class _SignInWebState extends State<SignInWeb> {
             margin: const EdgeInsets.symmetric(horizontal: 24),
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: cardColor, // ✅ 동적 카드 색상 적용
               borderRadius: BorderRadius.circular(24),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
+              ],
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                // 로고 및 타이틀
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.balance, color: Color(0xFF8463F6)),
-                    SizedBox(width: 8),
+                    Icon(Icons.balance, color: primaryColor, size: 28),
+                    const SizedBox(width: 8),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, '/main');
@@ -70,23 +90,22 @@ class _SignInWebState extends State<SignInWeb> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF8463F6),
+                          color: primaryColor,
                         ),
                       ),
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 8),
-                const Center(
+                Center(
                   child: Text(
                     '법적 문제 검사 AI 서비스',
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
+                    style: TextStyle(fontSize: 14, color: subTextColor),
                   ),
                 ),
                 const SizedBox(height: 24),
 
-                // 👇 로그인 / 회원가입 선택 탭
+                // 탭 버튼 (로그인 / 회원가입)
                 Row(
                   children: [
                     Expanded(
@@ -96,23 +115,17 @@ class _SignInWebState extends State<SignInWeb> {
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            gradient: isLoginMode
-                                ? const LinearGradient(
-                                    colors: [
-                                      Color(0xFF8463F6),
-                                      Color(0xFFB393F6),
-                                    ],
-                                  )
-                                : null,
-                            color: isLoginMode ? null : Colors.grey.shade200,
+                            color: isLoginMode 
+                                ? primaryColor 
+                                : (isDark ? Colors.grey[800] : Colors.grey[200]), // 비활성 버튼 색상
                           ),
                           child: Center(
                             child: Text(
                               '로그인',
                               style: TextStyle(
-                                color: isLoginMode
-                                    ? Colors.white
-                                    : Colors.black87,
+                                color: isLoginMode 
+                                    ? Colors.white 
+                                    : (isDark ? Colors.grey[400] : Colors.black87),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -128,23 +141,17 @@ class _SignInWebState extends State<SignInWeb> {
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            gradient: !isLoginMode
-                                ? const LinearGradient(
-                                    colors: [
-                                      Color(0xFF8463F6),
-                                      Color(0xFFB393F6),
-                                    ],
-                                  )
-                                : null,
-                            color: !isLoginMode ? null : Colors.grey.shade200,
+                            color: !isLoginMode 
+                                ? primaryColor 
+                                : (isDark ? Colors.grey[800] : Colors.grey[200]),
                           ),
                           child: Center(
                             child: Text(
                               '회원가입',
                               style: TextStyle(
-                                color: !isLoginMode
-                                    ? Colors.white
-                                    : Colors.black87,
+                                color: !isLoginMode 
+                                    ? Colors.white 
+                                    : (isDark ? Colors.grey[400] : Colors.black87),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -154,12 +161,12 @@ class _SignInWebState extends State<SignInWeb> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 24),
 
-                // 👇 아래는 선택된 입력 화면
-                // 👇 아래는 선택된 입력 화면
-                isLoginMode ? _buildLoginForm() : _buildSignUpForm(),
+                // 입력 폼 분기
+                isLoginMode 
+                    ? _buildLoginForm(textColor, inputFillColor, isDark, primaryColor) 
+                    : _buildSignUpForm(textColor, inputFillColor, isDark, primaryColor),
               ],
             ),
           ),
@@ -168,49 +175,47 @@ class _SignInWebState extends State<SignInWeb> {
     );
   }
 
-  Widget _buildLoginForm() {
+  // [로그인 폼]
+  Widget _buildLoginForm(Color textColor, Color? inputFillColor, bool isDark, Color primaryColor) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('이메일', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text('이메일', style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
         const SizedBox(height: 8),
         TextField(
           controller: signInLogic.emailController,
+          style: TextStyle(color: textColor), // 입력 텍스트 색상
           onChanged: (value) =>
               signInLogic.validateEmail(value, () => setState(() {})),
-          decoration: InputDecoration(
-            hintText: '이메일을 입력해 주세요',
-            errorText:
-                (!signInLogic.isEmailValid && signInLogic.emailMsg.isNotEmpty)
+          decoration: _inputDecoration('이메일을 입력해 주세요', inputFillColor, isDark, primaryColor).copyWith(
+            errorText: (!signInLogic.isEmailValid && signInLogic.emailMsg.isNotEmpty)
                 ? signInLogic.emailMsg
                 : null,
-            helperText:
-                (signInLogic.isEmailValid && signInLogic.emailMsg.isNotEmpty)
+            helperText: (signInLogic.isEmailValid && signInLogic.emailMsg.isNotEmpty)
                 ? signInLogic.emailMsg
                 : null,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ),
         const SizedBox(height: 16),
-        const Text('비밀번호', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text('비밀번호', style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
         const SizedBox(height: 8),
         TextField(
           obscureText: !isPasswordVisible,
           controller: signInLogic.passwordController,
+          style: TextStyle(color: textColor),
           onChanged: (value) =>
               signInLogic.validatePassword(value, () => setState(() {})),
-          decoration: InputDecoration(
-            hintText: '비밀번호를 입력하세요',
+          decoration: _inputDecoration('비밀번호를 입력하세요', inputFillColor, isDark, primaryColor).copyWith(
             errorText: signInLogic.pwMsg.isNotEmpty ? signInLogic.pwMsg : null,
             suffixIcon: IconButton(
               icon: Icon(
                 isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                color: Colors.grey,
               ),
               onPressed: () {
                 setState(() => isPasswordVisible = !isPasswordVisible);
               },
             ),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ),
         const SizedBox(height: 12),
@@ -218,13 +223,15 @@ class _SignInWebState extends State<SignInWeb> {
           children: [
             Checkbox(
               value: isAutoLogin,
+              activeColor: primaryColor,
+              side: BorderSide(color: isDark ? Colors.grey : Colors.black54), // 체크박스 테두리
               onChanged: (value) {
                 setState(() {
                   isAutoLogin = value ?? false;
                 });
               },
             ),
-            const Text('로그인 상태 유지'),
+            Text('로그인 상태 유지', style: TextStyle(color: textColor)),
           ],
         ),
         const SizedBox(height: 8),
@@ -245,166 +252,152 @@ class _SignInWebState extends State<SignInWeb> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              backgroundColor: const Color(0xFF8463F6),
+              backgroundColor: primaryColor,
             ),
             child: const Text(
               '로그인',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             ),
           ),
         ),
         const SizedBox(height: 16),
-        const Center(
+        Center(
           child: Text(
             '비밀번호를 잊으셨나요?',
-            style: TextStyle(color: Color(0xFF8463F6), fontSize: 13),
+            style: TextStyle(color: primaryColor, fontSize: 13),
           ),
         ),
       ],
     );
   }
 
-  //회원가입
-  Widget _buildSignUpForm() {
+  // [회원가입 폼]
+  Widget _buildSignUpForm(Color textColor, Color? inputFillColor, bool isDark, Color primaryColor) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 이름 입력
-        const Text('이름', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text('이름', style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
         const SizedBox(height: 8),
         TextField(
           controller: signUpLogic.nameController,
+          style: TextStyle(color: textColor),
           onChanged: (value) =>
               signUpLogic.validateName(value, () => setState(() {})),
-          decoration: InputDecoration(
-            hintText: '이름을 입력해 주세요',
-            errorText: signUpLogic.nameMsgType == MessageType.error
-                ? signUpLogic.nameMsg
-                : null,
-            helperText: signUpLogic.nameMsgType == MessageType.success
-                ? signUpLogic.nameMsg
-                : null,
+          decoration: _inputDecoration('이름을 입력해 주세요', inputFillColor, isDark, primaryColor).copyWith(
+            errorText: signUpLogic.nameMsgType == MessageType.error ? signUpLogic.nameMsg : null,
+            helperText: signUpLogic.nameMsgType == MessageType.success ? signUpLogic.nameMsg : null,
             helperStyle: const TextStyle(color: Colors.green),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ),
         const SizedBox(height: 16),
-
-        // 이메일 입력
-        const Text('이메일', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text('이메일', style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
         const SizedBox(height: 8),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: TextField(
-                controller: signUpLogic.emailController,
-                onChanged: (value) {
-                  signUpLogic.validateEmail(value, () => setState(() {}));
-                },
-                decoration: InputDecoration(
-                  hintText: '이메일을 입력해 주세요',
-                  errorText: signUpLogic.emailMsgType == MessageType.error
-                      ? signUpLogic.emailMsg
-                      : null,
-                  helperText: signUpLogic.emailMsgType == MessageType.success
-                      ? signUpLogic.emailMsg
-                      : null,
-                  helperStyle: const TextStyle(color: Colors.green),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-            ),
-          ],
+        TextField(
+          controller: signUpLogic.emailController,
+          style: TextStyle(color: textColor),
+          onChanged: (value) {
+            signUpLogic.validateEmail(value, () => setState(() {}));
+          },
+          decoration: _inputDecoration('이메일을 입력해 주세요', inputFillColor, isDark, primaryColor).copyWith(
+            errorText: signUpLogic.emailMsgType == MessageType.error ? signUpLogic.emailMsg : null,
+            helperText: signUpLogic.emailMsgType == MessageType.success ? signUpLogic.emailMsg : null,
+            helperStyle: const TextStyle(color: Colors.green),
+          ),
         ),
         const SizedBox(height: 16),
-
-        // 비밀번호 입력
-        const Text('비밀번호', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text('비밀번호', style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
         const SizedBox(height: 8),
         TextField(
           obscureText: !isPasswordVisible,
           controller: signUpLogic.passwordController,
-           // 일치 검사
+          style: TextStyle(color: textColor),
           onChanged: (value) {
             signUpLogic.validatePassword(value, () => setState(() {}));
             signUpLogic.validatePasswordConfirm(signUpLogic.pwConfirmController.text, () => setState(() {}));
           },
-          decoration: InputDecoration(
-            hintText: '비밀번호를 입력하세요',
-            errorText: signUpLogic.pwMsgType == MessageType.error
-                ? signUpLogic.pwMsg
-                : null,
-            helperText: signUpLogic.pwMsgType == MessageType.success
-                ? signUpLogic.pwMsg
-                : null,
+          decoration: _inputDecoration('비밀번호를 입력하세요', inputFillColor, isDark, primaryColor).copyWith(
+            errorText: signUpLogic.pwMsgType == MessageType.error ? signUpLogic.pwMsg : null,
+            helperText: signUpLogic.pwMsgType == MessageType.success ? signUpLogic.pwMsg : null,
             helperStyle: const TextStyle(color: Colors.green),
             suffixIcon: IconButton(
               icon: Icon(
                 isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                color: Colors.grey,
               ),
               onPressed: () {
                 setState(() => isPasswordVisible = !isPasswordVisible);
               },
             ),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ),
         const SizedBox(height: 16),
-
-        // 비밀번호 확인 입력
-        const Text('비밀번호 확인', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text('비밀번호 확인', style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
         const SizedBox(height: 8),
         TextField(
           obscureText: true,
           controller: signUpLogic.pwConfirmController,
+          style: TextStyle(color: textColor),
           onChanged: (value) =>
               signUpLogic.validatePasswordConfirm(value, () => setState(() {})),
-          decoration: InputDecoration(
-            hintText: '비밀번호를 다시 입력해 주세요',
-            errorText: signUpLogic.pwConfirmMsgType == MessageType.error
-                ? signUpLogic.pwConfirmMsg
-                : null,
-            helperText: signUpLogic.pwConfirmMsgType == MessageType.success
-                ? signUpLogic.pwConfirmMsg
-                : null,
+          decoration: _inputDecoration('비밀번호를 다시 입력해 주세요', inputFillColor, isDark, primaryColor).copyWith(
+            errorText: signUpLogic.pwConfirmMsgType == MessageType.error ? signUpLogic.pwConfirmMsg : null,
+            helperText: signUpLogic.pwConfirmMsgType == MessageType.success ? signUpLogic.pwConfirmMsg : null,
             helperStyle: const TextStyle(color: Colors.green),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ),
         const SizedBox(height: 24),
-
-        // 회원가입 버튼
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
             onPressed: (signUpLogic.isAllValid)
                 ? () async {
-                    // 인증 링크 전송 및 대기
-                    final success = await signUpLogic.performjoin(
-                      context: context,
-                    );
+                    final success = await signUpLogic.performjoin(context: context);
                     if (success) {
                       Navigator.pushNamed(context, '/main');
                     }
                   }
-                : null, // 비활성화
+                : null,
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              backgroundColor: const Color(0xFF8463F6),
+              backgroundColor: primaryColor,
+              disabledBackgroundColor: isDark ? Colors.grey[800] : Colors.grey[300],
             ),
             child: const Text(
               '회원가입',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             ),
           ),
         ),
       ],
+    );
+  }
+
+  // ✅ 공통 Input Decoration 스타일 헬퍼
+  InputDecoration _inputDecoration(String hint, Color? fillColor, bool isDark, Color primaryColor) {
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: TextStyle(color: Colors.grey),
+      filled: true,
+      fillColor: fillColor,
+      contentPadding: const EdgeInsets.all(16),
+      // 기본 테두리
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: isDark ? Colors.grey[700]! : Colors.grey[300]!),
+      ),
+      // 비활성 테두리 (평상시)
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: isDark ? Colors.grey[700]! : Colors.grey[300]!),
+      ),
+      // 포커스 테두리 (입력 중)
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: primaryColor, width: 2),
+      ),
     );
   }
 }
