@@ -1,35 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart'; // kIsWeb 사용
+// import 'package:flutter/foundation.dart'; // kIsWeb 불필요하여 제거
 
 class ApiService {
   
-  // 💡 클라우드 타입에서 부여받은 실제 주소
-  static const String CLOUD_API_URL = 'https://port-0-capstonebackend-m7syarm12c5a1376.sel4.cloudtype.app'; 
+  // 💡 [수정됨] 로컬 서버 주소로만 고정 (사용자 요청: 127.0.0.1:8000)
+  // Android 에뮬레이터에서 테스트할 경우, 이 주소를 'http://10.0.2.2:8000'으로 수동 변경해야 합니다.
+  static const String LOCAL_API_BASE_URL = 'http://127.0.0.1:8000'; 
 
-  // 💡 [수정된 로컬 주소] (Base URL: /docs를 제외한 부분)
-  // iOS 시뮬레이터, Desktop, 일반 브라우저에서 사용
-  static const String LOCAL_API_URL_IOS_DESKTOP = 'http://127.0.0.1:8000'; 
-  
-  // Android Emulator에서 호스트 PC의 로컬 서버에 접근하기 위해 사용
-  static const String LOCAL_API_URL_ANDROID = 'http://10.0.2.2:8000'; 
-  
-  // 1. Base URL 설정 (로컬 실행 환경 포함)
+  // 1. Base URL 설정 (로컬 주소로 고정)
   static String get baseUrl {
-    // kIsWeb: 현재 앱이 웹 환경에서 실행되고 있는지 여부를 알려줌
-    if (kIsWeb) {
-      // ✅ 웹 환경이거나 최종 배포 시 (클라우드 주소 사용)
-      return CLOUD_API_URL;
-    } else {
-      // ✅ 모바일/데스크톱 환경 (개발 중 로컬 서버 주소 사용)
-      // ⚠️ 주의: 테스트 환경에 맞춰 아래 둘 중 하나를 선택해야 합니다.
-      
-      // ➡️ 기본 설정 (iOS 시뮬레이터, Desktop, Mac/Linux/Windows 일반 실행)
-      return LOCAL_API_URL_IOS_DESKTOP; 
-      
-      // ➡️ ★ 안드로이드 에뮬레이터에서 테스트할 경우 아래 코드를 대신 사용하세요.
-      // return LOCAL_API_URL_ANDROID; 
-    }
+    // ✅ 모든 환경에서 로컬 주소 사용
+    return LOCAL_API_BASE_URL; 
   }
 
   // ------------------------------------------------------------------
