@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart'; // kIsWeb 사용을 위해 필요
 import '../../widgets/common_header.dart';
 import '../../state/theme_provider.dart'; // ThemeProvider import
 import 'package:provider/provider.dart';  // Provider import
+import '../../featutres/home/analysis_result.dart';
+import '../../services/api_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,8 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
   
   // 상태 변수
   bool _isAnalyzed = false;
+  bool _isLoading = false;
   String _analyzedText = "";
   int _analyzedTextLength = 0;
+  AnalyzeResult? _result;  // 결과 저장
 
   @override
   void initState() {
@@ -46,10 +50,38 @@ class _HomeScreenState extends State<HomeScreen> {
     if (text.isEmpty) return;
 
     setState(() {
-      _analyzedText = text;
       _isAnalyzed = true;
-      FocusScope.of(context).unfocus();
+      _isLoading = true;
+      _analyzedText = text;
+      _result = null;
     });
+
+    ApiService.analyzeTextStream(
+      text: text,
+      onMessage: (data) {
+        if (!mounted) return;
+
+        if (data["status"] == "progress") return;
+
+        if (data["status"] == "completed") {
+          final body = data["data"];
+          if (body is Map && body.containsKey("msg")) return;
+
+          try {
+            setState(() => _result = AnalyzeResult.fromJson(body));
+            _isLoading = false;
+          } catch (_) {}
+        }
+      },
+      onError: (error) {
+        if (!mounted) return;
+          setState(() {
+          _result = null;
+          _isLoading = false;
+        });
+      },
+      onDone: () {},
+    );
   }
 
   void _resetCheck() {
@@ -58,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _isAnalyzed = false;
       _analyzedText = "";
       _analyzedTextLength = 0;
+      _result = null;
     });
   }
 
@@ -74,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // 다크모드: 밝은 보라 (가시성 확보), 라이트모드: 진한 보라 (브랜드 컬러)
     final primaryColor = isDark ? const Color(0xFF8463F6) : const Color(0xFF6C4EFF);
     
-    final accentColor = const Color(0xFFE74C3C); // 위험 색상 (빨강) 유지
+    final accentColor =_result?.riskColor ?? Colors.grey; // 위험도 색상
     final textColor = isDark ? Colors.white : const Color(0xFF2C3E50);
     final subTextColor = isDark ? Colors.grey[400] : Colors.grey[600];
     final borderColor = isDark ? Colors.grey[800]! : Colors.grey[300]!;
@@ -101,8 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
           constraints: BoxConstraints(maxWidth: isWeb ? 900 : double.infinity),
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: _isAnalyzed
-              ? _buildResultUI(
-                  textColor, subTextColor, cardColor, primaryColor, accentColor, borderColor, isDark)
+              ? (_isLoading
+                  ? _buildLoadingUI(primaryColor) // 로딩 화면
+                  : _buildResultUI(
+                      textColor, subTextColor, cardColor, primaryColor, accentColor, borderColor, isDark))
               : _buildInputUI(
                   textColor, subTextColor, cardColor, primaryColor, borderColor),
         ),
@@ -223,9 +258,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildResultUI(Color textColor, Color? subTextColor, Color cardColor,
       Color primaryColor, Color accentColor, Color borderColor, bool isDark) {
     
-    double riskScore = 9.0;
-    double riskPercentage = riskScore / 10.0;
+    // 출력 변수
+    final double rawScore = (_result?.score ?? 0.0);
+    final double riskScore = (rawScore * 10.0);
+    final double riskPercentage = rawScore.clamp(0.0, 1.0);
 
+    final String risk = (_result?.risk ?? "Unknown");
+    final String riskKr = (_result?.riskKr ?? "알 수 없음");
+    final String lawReasonsText = (_result?.lawReasonsText ?? "-");
+    final String analysisReasonsText = (_result?.analysisReasonsText ?? "-");
+  
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 40),
       child: Column(
@@ -272,8 +314,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(height: 8),
                             Row(
                               children: [
-                                Text("CRITICAL", 
-                                    style: TextStyle(color: accentColor, fontSize: 32, fontWeight: FontWeight.w900)),
+                                Text(
+                                  risk, // 위험도 영어
+                                  style: TextStyle(color: accentColor, fontSize: 32, fontWeight: FontWeight.w900),
+                                ),
                                 const SizedBox(width: 12),
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -281,8 +325,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: accentColor,
                                     borderRadius: BorderRadius.circular(4),
                                   ),
-                                  child: const Text("심각", 
-                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
+                                  child: Text(
+                                    riskKr, // 위험도 한국어
+                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                                  ),
                                 ),
                               ],
                             ),
@@ -290,25 +336,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
+                              children: [ // 위험도 점수
                                 Text("Risk Score", style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
-                                Text("$riskScore / 10.0", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor)),
+                                Text("${riskScore.toStringAsFixed(1)} / 10.0", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor)),
                               ],
                             ),
                             const SizedBox(height: 8),
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
-                              child: LinearProgressIndicator(
+                              child: LinearProgressIndicator( // 프로그래스 바
                                 value: riskPercentage,
                                 minHeight: 12,
                                 backgroundColor: isDark ? Colors.grey[800] : Colors.grey[200],
                                 valueColor: AlwaysStoppedAnimation<Color>(accentColor),
                               ),
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              "이 문장은 법적/윤리적으로 매우 높은 위험을 포함하고 있습니다.", 
-                              style: TextStyle(color: subTextColor, fontSize: 14)
                             ),
                           ],
                         ),
@@ -353,14 +394,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
-                    children: [
+                    children: [ // 상세 분석
                       _buildDetailRow("입력 문장", '"$_analyzedText"', textColor, subTextColor, isHighlight: true),
                       const Divider(height: 24),
-                      _buildDetailRow("유해성 분류", "욕설 및 비하 (Profanity)", textColor, subTextColor),
+                      _buildDetailRow("관련 법률", lawReasonsText, textColor, subTextColor),
                       const Divider(height: 24),
-                      _buildDetailRow("혐오 표현", "감지됨 (Detected)", textColor, subTextColor, isAlert: true, accentColor: accentColor),
-                      const Divider(height: 24),
-                      _buildDetailRow("감정 강도", "매우 강함 (Very High)", textColor, subTextColor),
+                      _buildDetailRow("설명", analysisReasonsText, textColor, subTextColor),
                     ],
                   ),
                 ),
@@ -396,6 +435,24 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  // 로딩 UI
+  Widget _buildLoadingUI(Color primaryColor) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(color: primaryColor),
+          const SizedBox(height: 16),
+          const Text(
+            "분석 중입니다...",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+        ],
+      ),
     );
   }
 }
